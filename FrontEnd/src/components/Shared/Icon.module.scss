@@ -1,0 +1,25 @@
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    cursor: pointer; 
+  
+    svg {
+      width: 20px; 
+      height: 20px;
+      padding: 8px;
+      color: #e4e6eb;
+      border-radius: 50%;
+  
+      &:hover {
+        color: #ccc;
+      }
+
+      
+     
+    }
+  
+  }
+  
+ 
