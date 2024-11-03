@@ -7,7 +7,7 @@ export const createPost = async (postData) => {
         const response = await axios.post(`${API_URL}`, postData);
         return response.data;
     } catch( error) {
-        console.log('Create post failed', error);
+        console.error('Create post failed', error);
         throw error;
     }
 };
@@ -17,7 +17,7 @@ export const getPosts = async () => {
         const response = await axios.get(`${API_URL}`);
         return response.data;
     } catch(error) {
-        console.log("Error fetching posts", error);
+        console.error("Error fetching posts", error);
         throw error;
     }
 };
@@ -27,7 +27,7 @@ export const getPostById = async (postId) => {
         const response = await axios.get(`${API_URL}/${postId}`);
         return response.data;
     } catch(error) {
-        console.log(`Error fetching post with ID: ${postId}`, error);
+        console.error(`Error fetching post with ID: ${postId}`, error);
         throw error;
     }
 };
@@ -37,7 +37,7 @@ export const deletePost = async (postId) => {
         const response = await axios.delete(`${API_URL}/${postId}`);
         return response.data;
     } catch (error) {
-        console.log(`Error deleting post with ID: ${postId}`);
+        console.error(`Error deleting post with ID: ${postId}`);
         throw error;
     }
 };

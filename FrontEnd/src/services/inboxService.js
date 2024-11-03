@@ -7,7 +7,7 @@ export const createMessage = async (messageData) => {
         const response = await axios.post(`${API_URL}`, messageData);
         return response.data;
     } catch (error) {
-        console.log("Create message failed", error);
+        console.error("Create message failed", error);
         throw error;
     }
 };
@@ -17,7 +17,7 @@ export const getMessages = async () => {
         const response = await axios.get(`${API_URL}`);
         return response.data;
     } catch (error) {
-        console.log("Error fetching message ", error);
+        console.error("Error fetching message ", error);
         throw error;
     }
 };

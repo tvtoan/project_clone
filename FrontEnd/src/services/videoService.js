@@ -7,7 +7,7 @@ export const createVideo = async (videoData) => {
         const response = await axios.post(`${API_URL}`, videoData);
         return response.data;
     } catch (error) {
-        console.log("Create video failed", error);
+        console.error("Create video failed", error);
         throw error;
     }
 };
@@ -17,7 +17,7 @@ export const getVideos = async () => {
         const response = await axios.get(`${API_URL}`);
         return response.data;
     } catch (error) {
-        console.log("Error fetching videos", error);
+        console.error("Error fetching videos", error);
         throw error;
     }
 };
@@ -27,7 +27,7 @@ export const getVideoById = async (videoId) => {
         const response = await axios.get(`${API_URL}/${videoId}`);
         return response.data;
     } catch (error) {
-        console.log(`Error fetching video with ID: ${videoId}`, error);
+        console.error(`Error fetching video with ID: ${videoId}`, error);
         throw error;
     }
 };
@@ -37,7 +37,7 @@ export const deleteVideo = async (videoId) => {
         const response = await axios.delete(`${API_URL}/${videoId}`);
         return response.data;
     } catch ( error) {
-        console.log(`Error deleting video with ID: ${videoId}`, error);
+        console.error(`Error deleting video with ID: ${videoId}`, error);
         throw error;
     }
 };
