@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import storyService from "../../services/storyService";
 import Story from './Story';
+
+
 const StoryList = () => {
   const [stories, setStories] = useState([]);
 
@@ -33,3 +35,5 @@ const StoryList = () => {
     </div>
   );
 };
+
+export default StoryList;

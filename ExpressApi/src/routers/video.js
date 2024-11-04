@@ -1,5 +1,5 @@
 import express from 'express'
-import { uploadVideo, getVideos, getVideo, deleteVideo, addComment } from '../controllers/videoController'
+import { uploadVideo, getVideos, getVideo, deleteVideo } from '../controllers/videoController'
 import multer from 'multer';
 import authMiddleware from '../middlewares/authMiddleware';
 
