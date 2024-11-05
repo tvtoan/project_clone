@@ -1,12 +1,20 @@
 import Post from "../model/post";
 
+
+
 export const createPost = async (req, res) => {
+
+    const comments = req.body.comments?.map(comment => ({
+        userId: req.user.id, 
+        comment: comment.comment, 
+        
+    })) || [];
     const newPost = new Post({
         userId: req.user.id,
         description: req.body.description,
         image: req.body.image,
         likes: req.body.likes,
-        comments: req.body.comments || [],
+        comments: comments,
     });
     
     try {

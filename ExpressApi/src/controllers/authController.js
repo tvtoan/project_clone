@@ -2,6 +2,7 @@ import User from '../model/user';
 import bcrypt from 'bcryptjs/dist/bcrypt';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
+import user from '../model/user';
 
 dotenv.config();
 
@@ -31,5 +32,30 @@ export const login = async (req, res) => {
         res.status(200).json({token});
     } catch (error) {
         res.status(500).json({message: error.message});
+    }
+};
+
+export const getCurrentUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.status(200).json(user);
+    } catch (error) {
+
+        res.status(500).json({message: error.message});
+    }
+};
+
+export const verifyToken = async (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({message: "Access Denied"});
+    }
+
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified;
+        next();
+    } catch( error) {
+        res.status(400).json({message:"Invalid Token"});
     }
 };

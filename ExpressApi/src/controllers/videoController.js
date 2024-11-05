@@ -3,7 +3,6 @@ import Video from "../model/video";
 export const uploadVideo = async(req, res) => {
 
     
-   console.log(typeof(req.body.comments))
     if(!req.file) {
         res.status(400).json({message: 'No video file upload! '});
     }
@@ -12,7 +11,10 @@ export const uploadVideo = async(req, res) => {
 
     if(req.body.comments) {
         try {
-            comments = JSON.parse(req.body.comments);
+            comments = JSON.parse(req.body.comments).map(comment => ({
+                userId: req.user.id,
+                comment: comment.comment
+            }))
         } catch (error) {
             res.status(500).json({message: error.message});
         }
