@@ -59,3 +59,23 @@ export const verifyToken = async (req, res, next) => {
         res.status(400).json({message:"Invalid Token"});
     }
 };
+
+export const getUserByUsername = async (req, res) => {
+    const {username} = req.query;
+
+    if(!username) {
+        return res.status(400).json({message: "Username is required"});
+    }
+    try {
+        const users = await User.find({
+            username: {$regex: username , $options : "i"} // "i" k phan biet chu hoa, chu thuong
+        })
+        if (users.length === 0) {
+            return res.status(404).json({message: "No user found"});
+        }
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}

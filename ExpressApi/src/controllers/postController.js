@@ -9,6 +9,7 @@ export const createPost = async (req, res) => {
         comment: comment.comment, 
         
     })) || [];
+    
     const newPost = new Post({
         userId: req.user.id,
         description: req.body.description,

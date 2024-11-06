@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import postService from "../../services/postService";
+import {getPosts} from "../../services/postService";
 import Post from "./Post";
 import CreatePost from "./CreatePost";
 
@@ -9,7 +9,7 @@ const PostList = ({ userId }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const data = await postService.getPosts();
+        const data = await getPosts();
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts", error);

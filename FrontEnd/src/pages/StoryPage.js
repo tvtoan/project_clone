@@ -37,3 +37,5 @@ const StoryPage = () => {
         </div>
     )
 } 
+
+export default StoryPage;

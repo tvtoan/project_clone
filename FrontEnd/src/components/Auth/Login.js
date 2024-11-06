@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom';
-import authService from '../services/authService';
+import {login} from '../../services/authService';
 import styles from './Login.module.scss';
 import classNames from "classnames/bind";
 
@@ -14,7 +14,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            await authService.login(email, password);
+            await login(email, password);
             navigate('/');
         } catch (error) {
             console.log('Login failed', error);

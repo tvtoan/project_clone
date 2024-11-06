@@ -36,11 +36,23 @@ export const getCurrentUser = async () => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching current user', user);
+        console.error('Error fetching current user', error);
         throw error;
     }
 };
 
 export const logout = () => {
     localStorage.removeItem('token');
+};
+
+export const getUserByUsername = async (username) => {
+    try {
+        const response = await axios.get(`${API_URL}/users`, {
+            params: {username}
+        });
+        return response.data;
+    } catch (error ) {
+        console.error('Error fetching user by username', error);
+        throw error;
+    }
 };

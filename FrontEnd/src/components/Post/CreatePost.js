@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import postService from '../../services/postService';
+import {createPost} from '../../services/postService';
 
 const CreatePost = ({onPostCreated, userId}) => {
     const [content, setContent] = useState('');
@@ -18,7 +18,7 @@ const CreatePost = ({onPostCreated, userId}) => {
         if(image) formData.append('image', image);
 
         try {
-            const newPost = await postService.createPost(formData);
+            const newPost = await createPost(formData);
             onPostCreated(newPost);
             setContent('');
             setImage(null);

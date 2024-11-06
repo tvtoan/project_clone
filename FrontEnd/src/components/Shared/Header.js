@@ -4,45 +4,92 @@ import classNames from "classnames/bind";
 
 import Icons from "./Icon";
 import User from "./User";
+import { getUserByUsername } from "../../services/authService";
 
 const cx = classNames.bind(styles);
 const Header = () => {
-  const [active, setActive] = useState("home")
+  const [active, setActive] = useState("home");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    setSearchTerm(query);
+
+    if (query) {
+      try {
+        const results = await getUserByUsername(query);
+        setSearchResults(results);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchResults([]);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
   return (
     <div className={cx("header")}>
       <div className={cx("header-left")}>
-        <Icons.Facebook className = {cx('header-logo')} style = {{color:'blue'}}/>
+        <Icons.Facebook
+          className={cx("header-logo")}
+          style={{ color: "blue" }}
+        />
         <div className={cx("header-search")}>
           <Icons.Search />
-          <input type="text" placeholder="Tìm kiếm" />
+          <input
+            type="text"
+            placeholder="Tìm kiếm"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+           {searchResults.length > 0 && (
+            <div className={cx("search-results")}>
+              {searchResults.map((user) => (
+                <div key={user._id} className={cx("search-result-item")}>
+                  {user.username}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className={cx("header-center")}>
-        <div className = {cx('header-options',{active:active === "home"})}
-        onClick={() => setActive("home")}>
+        <div
+          className={cx("header-options", { active: active === "home" })}
+          onClick={() => setActive("home")}
+        >
           <Icons.Home />
         </div>
-        <div className = {cx('header-options',{active:active === "friend"})}
-        onClick={() => setActive("friend")}>
+        <div
+          className={cx("header-options", { active: active === "friend" })}
+          onClick={() => setActive("friend")}
+        >
           <Icons.Friend />
-        </div >
-        <div className = {cx('header-options',{active:active === "video"})}
-        onClick={() => setActive("video")}>
+        </div>
+        <div
+          className={cx("header-options", { active: active === "video" })}
+          onClick={() => setActive("video")}
+        >
           <Icons.Video />
         </div>
-        <div className = {cx('header-options',{active:active === "market"})}
-        onClick={() => setActive("market")}>
+        <div
+          className={cx("header-options", { active: active === "market" })}
+          onClick={() => setActive("market")}
+        >
           <Icons.Market />
         </div>
-        <div className = {cx('header-options',{active:active === "group"})}
-        onClick={() => setActive("group")}>
+        <div
+          className={cx("header-options", { active: active === "group" })}
+          onClick={() => setActive("group")}
+        >
           <Icons.Group />
         </div>
       </div>
       <div className={cx("header-right")}>
-        <Icons.Messenger className = {cx('header-icon')} />
-        <Icons.Notification className = {cx('header-icon')} />
-        <User className = {cx('header-icon')} />
+        <Icons.Messenger className={cx("header-icon")} />
+        <Icons.Notification className={cx("header-icon")} />
+        <User className={cx("header-icon")} />
       </div>
     </div>
   );

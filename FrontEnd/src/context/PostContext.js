@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import postService  from '../services/postService';
+import {getPosts, createPost, deletePost}  from '../services/postService';
 
 export const PostContext = createContext();
 
@@ -10,7 +10,7 @@ export const PostProvider = ({children}) => {
     const fetchPosts = async () => {
         setLoading(true);
         try {
-            const fetchedPosts = await postService.getPosts();
+            const fetchedPosts = await getPosts();
             setPosts(fetchedPosts);
         } catch (error) {
             console.error('Error fetching posts', error);
@@ -21,7 +21,7 @@ export const PostProvider = ({children}) => {
 
     const createPost = async (postData) => {
         try {
-            const newPost = await postService.createPost(postData);
+            const newPost = await createPost(postData);
             setPosts((prevPosts) => [...prevPosts, newPost]);
         } catch (error) {
             console.error("Error creating post", error);
@@ -30,7 +30,7 @@ export const PostProvider = ({children}) => {
 
     const deletePost = async (postId) => {
         try {
-            await postService.deletePost(postId);
+            await deletePost(postId);
             setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
         } catch (error) {
             console.error("Error deleting post", error);

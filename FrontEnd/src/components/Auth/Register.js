@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authService from '../../services/authService';
+import { register} from '../../services/authService';
 import styles from './Register.module.scss';
 import classNames from "classnames/bind";
 
@@ -15,10 +15,10 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventdefault();
         try {
-            await authService.register( name, email, password);
+            await register( name, email, password);
             navigate('/login');
         } catch(error) {
-            console.log('Register failed', error);0
+            console.log('Register failed', error);
         }
     }
 
