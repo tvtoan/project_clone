@@ -7,14 +7,23 @@ import videoRouter from './routers/video';
 import { connectDb } from './config/db';
 import dotenv from 'dotenv'
 
+import cors from 'cors';
+
 // config for dotenv
 dotenv.config();
 
 const app = express();
+
+// config cors
+app.use(cors({
+    origin:'http://localhost:3000',
+}));
+
 // Middleware
 app.use(express.json());
 
 // connect Db   
+console.log("Database URI:", process.env.DB_URI);
 connectDb(process.env.DB_URI)
 
 // router
@@ -24,5 +33,9 @@ app.use('/api/stories', storyRouter);
 app.use('/api/videos', videoRouter);
 app.use('/api/inbox', inboxRouter);
 
+const port = process.env.PORT  || 3001;
+app.listen(port, () => {
+    console.log(` Backend server is running on http://localhost:${port}`)
+});
 
 export const viteNodeApp = app;

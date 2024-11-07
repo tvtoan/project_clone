@@ -44,12 +44,12 @@ export const Icons = {
       style={{ fill: "#007bff" }}
     />
   ),
-  Home: () => <IconWithTooltip icon={AiFillHome} tooltipText="Home" link="/" />,
+  Home: () => <IconWithTooltip icon={AiFillHome} tooltipText="Home" link="/home" />,
   Friend: () => (
     <IconWithTooltip
       icon={FaUserFriends}
       tooltipText="Friend"
-      link="/friends"
+      link="/friend"
     />
   ),
   Search: () => (
@@ -59,11 +59,11 @@ export const Icons = {
     <IconWithTooltip
       icon={AiOutlineSetting}
       tooltipText="Settings"
-      link="/settings"
+      link="/setting"
     />
   ),
   Video: () => (
-    <IconWithTooltip icon={PiVideoFill} tooltipText="Video" link="/videos" />
+    <IconWithTooltip icon={PiVideoFill} tooltipText="Video" link="/video" />
   ),
   Messenger: () => (
     <IconWithTooltip

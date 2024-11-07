@@ -9,14 +9,19 @@ const cx = classNames.bind(styles)
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('')
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            await login(email, password);
-            navigate('/');
+            const response =await login(email, password);
+            if(response && response.token) {
+                localStorage.setItem("token", response.token);
+            }
+            navigate('/home');
         } catch (error) {
+            setError(error.response ? error.response.data.message: "login failed, please try again.");
             console.log('Login failed', error);
         }
     }
@@ -43,6 +48,8 @@ const Login = () => {
                 />
                 <button type= "submit" className= {cx('button')}>Login</button>
             </form>
+
+            {error && <div>{error}</div>}
         </div>
     )
     

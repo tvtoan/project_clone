@@ -38,7 +38,9 @@ export const uploadVideo = async(req, res) => {
 
 export const getVideo = async(req, res) => {
     try {
-        const video = await Video.findById(req.params.id).populate('userId', 'username');
+        const video = await Video.findById(req.params.id)
+        .populate('userId', 'username')
+        .populate('comments.userId', 'username');
         if(!video) {
             res.status(404).json({message: 'Video not found'});
         }
@@ -50,7 +52,9 @@ export const getVideo = async(req, res) => {
 
 export const getVideos = async(req, res) => {
     try {
-        const videos = await Video.find().populate('userId', 'username');
+        const videos = await Video.find()
+        .populate('userId', 'username')
+        .populate('comments.userId', 'username');
         res.status(200).json(videos)
     } catch( error) {
         res.status(500).json({message: error.message})

@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 
 import Header from '../Shared/Header';
 import Sidebar from "../Shared/Sidebar";
+import PostList from "../Post/PostList";
 
 
 const cx = classNames.bind(styles)
@@ -16,7 +17,9 @@ const Layout = ({children}) => {
                 <main className = {cx('main')}>
                     {children}
                 </main>
+                <PostList />
             </div>
+
         </div>
     )
 }

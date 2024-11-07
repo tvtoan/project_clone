@@ -15,19 +15,22 @@ const AppRoutes = () => {
     
       <AuthProvider>
         <PostProvider>
-          <Layout>
+         
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/inbox" element={<InboxPage />} />
-              <Route path="/story" element={<StoryPage />} />
-              <Route path="/video" element={<VideoPage />} />
+              <Route element= {<Layout />} >
+
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/inbox" element={<InboxPage />} />
+                <Route path="/story" element={<StoryPage />} />
+                <Route path="/video" element={<VideoPage />} />
+              </Route>
 
               {/* Route page not found (404) */}
               <Route path="*" component={() => <div>Page not found</div>} />
             </Routes>
-          </Layout>
+          
         </PostProvider>
       </AuthProvider>
     
