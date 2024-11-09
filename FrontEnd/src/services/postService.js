@@ -2,17 +2,17 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:3001/api/posts"
 
-export const createPost = async (postData) => {
+export const createPost = async (formData) => {
     try {
-        const token = localStorage.get('token');
-        const response = await axios.post(`${API_URL}`, postData, {
+        const token = localStorage.getItem('token');  // Lấy token từ localStorage
+        const response = await axios.post(`${API_URL}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",  //  Content-Type
             }
         });
         return response.data;
-    } catch( error) {
+    } catch (error) {
         console.error('Create post failed', error.response ? error.response.data : error.message);
         throw error;
     }

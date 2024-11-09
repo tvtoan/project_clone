@@ -5,7 +5,14 @@ const Post = ({post}) => {
         <div>
             <h3> User : { post.userId?.username || "Unknown User"}</h3>
             <p> {post.description}</p>
-            {post.image && <img src ={post.image} alt = "Post" /> }
+            <p>{post.image}</p>
+            {post.image && 
+            <img 
+                src ={`http://localhost:3001${post.image}`} 
+                alt = "Post"
+                style={{ maxWidth: '300px', maxHeight: '300px' }}
+
+            /> }
             <div>
                 <h4>Comments:</h4>
                 <ul>

@@ -5,9 +5,7 @@ import CreatePost from "./CreatePost";
 
 const PostList = ({ userId }) => {
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
+  const fetchPosts = async () => {
       try {
         const data = await getPosts();
         setPosts(data);
@@ -15,11 +13,14 @@ const PostList = ({ userId }) => {
         console.error("Error fetching posts", error);
       }
     };
+  useEffect(() => {
+    
     fetchPosts();
   }, []);
 
   const handlePostCreated = (newPost) => {
     setPosts((prevPost) => [newPost, ...prevPost]);
+    fetchPosts();
   };
 
   return (

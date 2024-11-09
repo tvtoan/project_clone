@@ -13,7 +13,7 @@ const Layout = ({children}) => {
         <div className = {cx('layout')}>
             <Header />
             <div className = {cx('content')}>
-                <Sidebar />
+                {/* <Sidebar /> */}
                 <main className = {cx('main')}>
                     {children}
                 </main>

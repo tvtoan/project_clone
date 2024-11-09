@@ -1,7 +1,6 @@
 import Post from "../model/post";
 
 
-
 export const createPost = async (req, res) => {
 
     const comments = req.body.comments?.map(comment => ({
@@ -13,13 +12,14 @@ export const createPost = async (req, res) => {
     const newPost = new Post({
         userId: req.user.id,
         description: req.body.description,
-        image: req.body.image,
+        image: req.file ? `/uploads/${req.file.filename}`: null,
         likes: req.body.likes,
         comments: comments,
     });
     
     try {
         const savedPost = await newPost.save();
+       
         res.status(201).json(savedPost);
     } catch(error) {
         res.status(500).json({message:error.message});
