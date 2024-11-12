@@ -26,6 +26,37 @@ export const createPost = async (req, res) => {
     }
 };
 
+export const addComment = async ( req, res) => {
+    const {id: postId} = req.params;
+    
+    const {comment } = req.body;
+
+    try {
+        const post = await Post.findById(postId);
+        if(!post) {
+            return res.status(404).json({message: "Post not found"});
+        }
+
+        const newComment = {
+            userId: req.user.id,
+            comment: comment,
+            createAt: new Date(),
+        };
+
+        post.comments.push(newComment);
+        await post.save();
+
+        // update post after add comment
+        const updatedPost = await Post.findById(postId).populate({
+            path: "comments.userId",
+            select: "username"
+        })
+        res.status(200).json(updatedPost);
+    } catch (error ) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 export const getPost = async (req, res) => {
     try { 
         const post = await Post.findById(req.params.id)

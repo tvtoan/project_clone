@@ -18,6 +18,25 @@ export const createPost = async (formData) => {
     }
 };
 
+export const addComment = async (postId, commentData) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post( 
+            `${API_URL}/${postId}/comments`,
+            commentData, 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data
+    }  catch (error) {
+        console.error("Error adding comment", error.response? error.response.data: error.message);
+        throw error;
+    }
+};
+
 export const getPosts = async () => {
     try {
         const token = localStorage.getItem('token');

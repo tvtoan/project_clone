@@ -11,26 +11,44 @@ import {
   FaSearch,
   FaUserFriends,
   FaStore,
+  FaRegComment,
 } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
-import { AiFillHome, AiOutlineSetting } from "react-icons/ai";
-import { PiVideoFill } from "react-icons/pi";
+import { AiFillHome, AiOutlineSetting, AiOutlineLike } from "react-icons/ai";
+import { PiVideoFill, PiShareFat } from "react-icons/pi";
 import { MdAdd, MdOutlineGroup } from "react-icons/md";
+import { RiSendPlaneFill } from "react-icons/ri";
 
 const cx = classNames.bind(styles);
-const IconWithTooltip = ({ icon: Icon, tooltipText, link }) => {
+const IconWithTooltip = ({
+  icon: Icon,
+  tooltipText,
+  link,
+  className,
+  onClick,
+}) => {
   return (
     <Tippy
       content={tooltipText}
       placement="bottom"
       theme="dark"
-      hideOnClick= "false"
-      delay={[50, 700]}
+      hideOnClick="false"
+      delay={[50, 100]}
       offset={[2, 18]}
     >
-      <Link to={link} className={cx("icon-wrapper")}>
-        <Icon size={24} />
-      </Link>
+      {Link ? (
+        <Link
+          to={link}
+          className={cx("icon-wrapper", className)}
+          onClick={onClick}
+        >
+          <Icon size={24} />
+        </Link>
+      ) : (
+        <div className={cx("icon-wrapper", className)} onClick={onClick}>
+          <Icon size={24} />
+        </div>
+      )}
     </Tippy>
   );
 };
@@ -44,13 +62,11 @@ export const Icons = {
       style={{ fill: "#007bff" }}
     />
   ),
-  Home: () => <IconWithTooltip icon={AiFillHome} tooltipText="Home" link="/home" />,
+  Home: () => (
+    <IconWithTooltip icon={AiFillHome} tooltipText="Home" link="/home" />
+  ),
   Friend: () => (
-    <IconWithTooltip
-      icon={FaUserFriends}
-      tooltipText="Friend"
-      link="/friend"
-    />
+    <IconWithTooltip icon={FaUserFriends} tooltipText="Friend" link="/friend" />
   ),
   Search: () => (
     <IconWithTooltip icon={FaSearch} tooltipText="Search" link="/search" />
@@ -86,6 +102,17 @@ export const Icons = {
   Group: () => (
     <IconWithTooltip icon={MdOutlineGroup} tooltipText="Group" link="/group" />
   ),
+
+  Like: ({ onClick, className }) => (
+    <IconWithTooltip icon={AiOutlineLike} tooltipText="Like" />
+  ),
+  Comment: () => <IconWithTooltip icon={FaRegComment} tooltipText="Comment" />,
+  Share: () => <IconWithTooltip icon={PiShareFat} tooltipText="Share" />,
+  SubmitComment: () => (
+
+    <IconWithTooltip icon={RiSendPlaneFill} tooltipText="Comment" />
+  )
+  
 };
 
 export default Icons;
