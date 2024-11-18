@@ -54,7 +54,7 @@
 
   &.active {
     color: #007bff !important;
-    transform: sacle(1.2);
+    transform: scale(1.2);
   }
 }
 
@@ -68,6 +68,11 @@
   font-weight: bold;
   margin-bottom: 10px;
   color: #e4e4eb;
+}
+
+.post-time {
+  font-size: 14px;
+  color:#b0b3b8;
 }
 
 .comments-list {
@@ -108,6 +113,7 @@
   font-style: 14px;
 }
 
+
 .no-comments {
   color: #d1d1d1;
   font-size: 14px;
@@ -144,6 +150,7 @@
 
 .time-comment {
   font-size: 10px;
+  color: #b0b3b8;
 }
 
 

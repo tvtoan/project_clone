@@ -1,0 +1,96 @@
+.login-page {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f4f7;
+}
+
+.left-section {
+    flex:1;
+    padding: 20px;
+    max-width: 500px;
+}
+
+.logo {
+    color: #1887f2;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 24px;
+    color: #5f6166;
+}
+
+.right-section {
+    flex:1;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;   
+}
+
+.input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 0.5px solid #dbdee5;
+    border-radius: 5px;
+    font-size: 16px;
+
+}
+
+.login-button {
+    width:100%;
+    padding: 12px;
+    background-color: #1887f2;
+    color:white;
+    font-weight: bold;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+   
+    &:disabled {
+        background-color: #a3c2ff;
+        cursor: not-allowed;
+    }
+}
+
+.forgot-password {
+  color: #1887f2; 
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.line {
+    margin: 10px 0;
+    border-bottom: 1px solid #dbdee5;
+}
+.register-button {
+    padding: 10px;
+    background-color: #42b72a;
+    color:white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+@media(max-width: 850px) {
+    .left-section {
+        display: none;
+    }
+}

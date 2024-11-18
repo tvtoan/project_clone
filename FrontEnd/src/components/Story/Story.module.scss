@@ -1,0 +1,31 @@
+.story {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+
+    &-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 15px;
+        object-fit: cover;
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-user {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    &-text {
+        color: #555;
+    }
+}

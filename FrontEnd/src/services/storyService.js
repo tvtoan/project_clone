@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3001/api/stories";
 
-export const CreateStory = async (storyData) => {
+export const createStory = async (storyData) => {
     try {
         const response = await axios.post(`${API_URL}`, storyData);
         return response.data;

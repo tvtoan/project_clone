@@ -5,7 +5,7 @@ export const createStory = async (req, res) => {
    
     const newStory = new Story({
         userId: req.user.id,
-        image: req.file.path,
+        image: req.file ? `/uploadStories/${req.file.filename}`: null,
         text: req.body.text,
         
     });
