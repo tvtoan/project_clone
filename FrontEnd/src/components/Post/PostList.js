@@ -27,12 +27,12 @@ const PostList = ({ userId }) => {
     <div>
       <CreatePost onPostCreated={handlePostCreated} userId={userId} />
       
-      <ul>
+      <ul style = {{listStyle :"none"}}>
         {posts.map((post) => (
           <li key={post._id}>
             <Post post={post} />
           </li>
-        ))};
+        ))}
       </ul>
     </div>
   );

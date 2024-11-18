@@ -21,7 +21,7 @@ const HomePage = () => {
   }
 
   return (
-    <Layout>
+    <Layout className = {cx('main-container')}>
       <div className={cx("container")}>
         <div className={cx("left-column")}>
           <div className={cx("sidebar-wrapper")}>
