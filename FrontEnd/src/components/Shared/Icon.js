@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import { AiFillHome, AiOutlineSetting, AiOutlineLike } from "react-icons/ai";
-import { PiVideoFill, PiShareFat } from "react-icons/pi";
+import { PiVideoFill, PiShareFat, PiUploadSimple } from "react-icons/pi";
 import { MdAdd, MdOutlineGroup } from "react-icons/md";
 import { RiSendPlaneFill } from "react-icons/ri";
 
@@ -111,7 +111,8 @@ export const Icons = {
   SubmitComment: () => (
 
     <IconWithTooltip icon={RiSendPlaneFill} tooltipText="Comment" />
-  )
+  ),
+  Upload: () => (<IconWithTooltip icon = {PiUploadSimple} tooltipText= "Upload" />)
   
 };
 

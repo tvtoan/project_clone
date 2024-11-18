@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Shared/Sidebar";
 import PostList from "../components/Post/PostList";
+import StoryList from "../components/Story/StoryList";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout/Layout";
 
@@ -28,6 +29,10 @@ const HomePage = () => {
           </div>
         </div>
         <div className={cx("middle-column")}>
+          <div className={cx('storylist-wrapper')}>
+           
+            < StoryList />
+          </div>
           <div className={cx("postlist-wrapper")}>
             <PostList />
           </div>

@@ -8,13 +8,21 @@ const cx = classNames.bind(styles);
 const Story = ({ story }) => {
   return (
     <div className={cx("story")}>
-      <h3>User Id: {story.userId}</h3>
-      <img src={story.image} alt="story" className={cx("story-image")} />
-      <div className= {cx('story-info')}>
-        <User />
-        <p className= {cx('story-user')}>{Story.userId.username}</p>
+      <img
+        src={`http://localhost:3001${story.image}`}
+        alt="story"
+        className={cx("story-image")}
+      />
+      <div className={cx("story-info")}>
+        <div className = {cx('user')}> 
 
-        <p className={cx('story-text')}> {story.text}</p>
+          <div className={cx('avatar')}>
+
+           <User  /> 
+          </div>
+          <p className={cx("story-user")}>{story.userId.username}</p>
+        </div>
+
       </div>
     </div>
   );

@@ -23,6 +23,8 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/uploads', express.static('uploads'))
+app.use('/uploadStories', express.static('uploadStories'))
+
 // connect Db   
 console.log("Database URI:", process.env.DB_URI);
 connectDb(process.env.DB_URI)
