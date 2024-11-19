@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { PostProvider } from "./context/PostContext";
-import Layout from "./components/Layout/Layout";
 import LoginPage from "./components/Auth/Login";
 import RegisterPage from "./components/Auth/Register";
 import HomePage from "./pages/HomePage";
@@ -23,7 +22,7 @@ const AppRoutes = () => {
 
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/inbox" element={<InboxPage />} />
-                <Route path="/story" element={<StoryPage />} />
+                <Route path="/story/:id" element={<StoryPage />} />
                 <Route path="/video" element={<VideoPage />} />
              
 
