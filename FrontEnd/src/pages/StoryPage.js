@@ -55,11 +55,18 @@ const StoryPage = () => {
         <div className={cx("story-content")}>
           <div className={cx("user-info")}>
             <User />
-            <h2>{story.userId.username}</h2>
+            <p>{story.userId.username}</p>
           </div>
-          <p className = {cx('time-ago')}>{timeAgo}</p>
-          <button onClick={handleDelete} className = {cx('delete-button')}>
+          <p className={cx("time-ago")}>{timeAgo}</p>
+          <button onClick={handleDelete} className={cx("delete-button")}>
             <Icons.Delete />
+          </button>
+          <button
+            className={cx("close-button")}
+            onClick={() => navigate("/home")}
+            aria-label="Close story"
+          >
+            <Icons.Close />
           </button>
 
           {story.image && (
@@ -69,7 +76,7 @@ const StoryPage = () => {
               className={cx("story-image")}
             />
           )}
-          <p className = {cx('text')}>{story.text}</p>
+          <p className={cx("text")}>{story.text}</p>
         </div>
       ) : (
         <p>Loading story...</p>

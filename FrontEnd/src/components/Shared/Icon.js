@@ -17,7 +17,7 @@ import { FaFacebookF } from "react-icons/fa6";
 import { AiFillHome, AiOutlineSetting, AiOutlineLike } from "react-icons/ai";
 import { PiVideoFill, PiShareFat, PiUploadSimple } from "react-icons/pi";
 import { MdAdd, MdOutlineGroup, MdDelete } from "react-icons/md";
-import { RiSendPlaneFill } from "react-icons/ri";
+import { RiSendPlaneFill, RiCloseCircleFill } from "react-icons/ri";
 
 const cx = classNames.bind(styles);
 const IconWithTooltip = ({
@@ -113,7 +113,8 @@ export const Icons = {
     <IconWithTooltip icon={RiSendPlaneFill} tooltipText="Comment" />
   ),
   Upload: () => (<IconWithTooltip icon = {PiUploadSimple} tooltipText= "Upload" />),
-  Delete: () => (<IconWithTooltip icon = {MdDelete} tooltipText={'Delete'} />)
+  Delete: () => (<IconWithTooltip icon = {MdDelete} tooltipText={'Delete'} />),
+  Close: () => (<IconWithTooltip icon = {RiCloseCircleFill} tooltipText={"Close"} />)
   
 };
 
