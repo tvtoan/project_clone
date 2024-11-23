@@ -1,39 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import Video from "./Video";
-import videoService from '../../services/videoService';
+import CreateVideo from "./CreateVideo";
+import  { getVideos } from "../../services/videoService";
+import styles from './VideoList.module.scss';
+import classNames from "classnames/bind";
 
-const VideoList =  () => {
-    const [videos, setVideos] = useState([]);
+const cx = classNames.bind(styles);
 
-    useEffect(() => {
-        const fetchVideos = async () => {
-            try {
-                const data = await videoService.getVideos();
-                setVideos(data);
-            } catch (error) {
-                console.error("Error fetching videos:", error);
-            }
-        };
-        fetchVideos();
+const VideoList = ({userId}) => {
+  const [videos, setVideos] = useState([]);
 
-    }, []);
-    return (
-        <div>
-            <h2>Videos</h2>
-            {videos.length === 0 ? (
-                <p>No videos available</p>
-            ): (
-                <ul>
-                    {videos.map((video) => {
-                        <li key = {video._id}>
-                            <Video video = {video} />
-                        </li>
-                    })}
-                </ul>
-            ) }
-        </div>
-    );
+  const fetchVideos = async () => {
+    try {
+      const data = await getVideos();
+      setVideos(data);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
+
+ 
+
+  const handleVideoCreated = (newVideo) => {
+    setVideos((prevVideo) => [newVideo, ...prevVideo]);
+    fetchVideos();
+  }
+
+  return (
+    <div className = {cx('video-list')}> 
+      <CreateVideo onVideoCreated = {handleVideoCreated} userId = {userId} />
+      {videos.length === 0 ? (
+        <p>No videos available</p>
+      ) : (
+        <ul>
+          {videos.map((video) => (
+            <li key={video._id}>
+              <Video video={video} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
-
 
 export default VideoList;

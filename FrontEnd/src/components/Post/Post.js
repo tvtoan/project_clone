@@ -54,6 +54,7 @@ const Post = ({ post }) => {
       <p className={cx("description")}>{post.description}</p>
 
       {post.image && (
+        
         <img
           src={`http://localhost:3001${post.image}`}
           alt="Post"

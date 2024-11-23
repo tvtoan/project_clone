@@ -23,15 +23,7 @@ const StoryList = ({userId}) => {
     fetchStories();
   }, []);
 
-  const handleDelete = async (storyId) => {
-    try {
-      await deleteStory(storyId);
-      setStories(stories.filter((story) => story._id !== storyId));
-    } catch (error) {
-      console.error("Error deleting story", error);
-    }
-    
-  };
+
   const handleStoryCreated = (newStory) => {
     setStories((prevStory) => [newStory, ...prevStory]);
     fetchStories();

@@ -50,7 +50,7 @@ const CreateStory = ({ onStoryCreated, userId }) => {
 
     console.log(formData);
     try {
-      const newStory = await createStory(formData); 
+      const newStory = await createStory(formData);
 
       onStoryCreated(newStory);
       setText("");
@@ -64,7 +64,6 @@ const CreateStory = ({ onStoryCreated, userId }) => {
 
   return (
     <form onSubmit={handleSubmit} className={cx("form")}>
-     
       {error && <p className={cx("error")}>{error}</p>}
 
       {/* Click vào Icons.Upload sẽ trigger file input */}
@@ -79,7 +78,6 @@ const CreateStory = ({ onStoryCreated, userId }) => {
         <img src={preview} alt="Preview" className={cx("form-preview")} />
       )}
       <div className={cx("form-user")}>
-        
         <input
           type="text"
           value={text}
@@ -96,7 +94,6 @@ const CreateStory = ({ onStoryCreated, userId }) => {
         className={cx("form-input")}
       />
 
-      
       <button type="submit" className={cx("form-button")}>
         Post Story
       </button>
