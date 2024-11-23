@@ -1,34 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { getVideos } from "../services/videoService";
+import React from "react";
 import VideoList from "../components/Video/VideoList";
-import Layout from '../../src/components/Layout/Layout';
+import Layout from "../../src/components/Layout/Layout";
+import Sidebar from "../../src/components/Shared/Sidebar";
+import styles from './Video.module.scss';
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
 
 const VideoPage = () => {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchVideos = async () => {
-    try {
-      const fetchedVideos = await getVideos();
-      setVideos(fetchedVideos);
-    } catch (error) {
-      console.error("Error fetching videos", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchVideos();
-  }, []);
-
-  if (loading) return <div>Loading Videos...</div>;
-
   return (
-    <Layout >
+    <Layout>
+      <div className={cx('container')}>
+        <div className={cx('left-column')}>
+          <Sidebar />
+        </div>
 
-      <div>
-        <VideoList />
+        <div className={cx('right-column')}>
+          <VideoList />
+        </div>
       </div>
     </Layout>
   );
