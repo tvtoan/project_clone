@@ -1,18 +1,17 @@
 import Message from "../model/message";
 
-
 // create message
 export const createMessage = async (req, res) => {
-    const {conversationId, text} = req.body;
+    const {receiverId, text} = req.body;
     
 
-    if(!conversationId || !text) {
-        res.status(400).json({message: "Conversation Id and message text are require"});
+    if(!receiverId || !text) {
+       return res.status(400).json({message: "Conversation Id, receiverId and message text are require"});
     }
 
     const newMessage = new Message({
-        conversationId,
         senderId: req.user.id,
+        receiverId,
         text,
     });
 
@@ -24,18 +23,19 @@ export const createMessage = async (req, res) => {
     }
 }
 
-// get messages from 1 conversation
+
 export const getMessages = async (req, res) => {
    
-    const {conversationId} = req.params
+    const {receiverId} = req.params;
+    const senderId = req.user.id;
 
-    if(!conversationId) {
-        res.status(404).json({message: "Conversation Id is require"})
-    }
     
     try {
            
-        const messages = await Message.find({conversationId}).sort({createAt: 1});
+        const messages = await Message.find({ $or: [
+            {senderId, receiverId },  
+            {senderId: receiverId, receiverId: senderId}, 
+        ]}) .sort({createAt: 1});
         res.status(200).json(messages)
     } catch(error) {
         res.status(500).json({message: error.message});

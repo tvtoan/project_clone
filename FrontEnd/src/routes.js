@@ -21,13 +21,13 @@ const AppRoutes = () => {
               
 
                 <Route path="/home" element={<HomePage />} />
-                <Route path="/inbox" element={<InboxPage />} />
+                <Route path="/inbox/:receiverId" element={<InboxPage />} />
                 <Route path="/story/:id" element={<StoryPage />} />
                 <Route path="/video" element={<VideoPage />} />
              
 
               {/* Route page not found (404) */}
-              <Route path="*" component={() => <div>Page not found</div>} />
+              <Route path="*" element={<div>Page not found</div>} />
             </Routes>
           
         </PostProvider>

@@ -1,42 +1,44 @@
-import React, { useContext, useEffect, useState } from "react";
-import { getMessages } from "../services/inboxService";
-import { AuthContext } from "../context/AuthContext";
+import React from "react";
+import {  useAuth } from "../context/AuthContext";
+import { useParams } from "react-router-dom";
+import styles from './InboxPage.module.scss';
+import classNames from "classnames/bind";
+import InboxList from "../components/Inbox/InboxList";
+import UserList from "../components/Shared/UserList";
+
+
+const cx = classNames.bind(styles);
 
 const InboxPage = () => {
-  const { user } = useContext(AuthContext);
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { receiverId } = useParams();
+  const {user, loading} = useAuth();
+  console.log(receiverId)
 
-  const fetchMessages = async () => {
-    try {
-      const fetchedMessages = await getMessages(user.id);
-      setMessages(fetchedMessages);
-    } catch (error) {
-      console.error("Error fetching messages", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if(loading) {
+    return <div>Loading...</div>
+  }
 
-  useEffect(() => {
-    if (user) {
-      fetchMessages();
-    }
-  }, [user]);
-
-  if (loading) return <div> Loading messages...</div>;
+  if(!user ) {
+    return <div> Please login to view your inbox</div>
+  }
 
   return (
-    <div>
-      <ul>
-        {messages.map((message) => (
-          <li key={message._id}>
-            <strong> {message.senderId}</strong> : {message.text}
-          </li>
-        ))}
-      </ul>
+    <div className = {cx('inbox-page')}>
+      <div className={cx('user-list')}>
+        <UserList />
+      </div>
+      <div className= {cx('message-section')}>
+        {receiverId ? (
+          <InboxList receiverId={receiverId} currentUser={user} />
+        ):(
+          <p>Select a user to start chatting</p>
+        )}
+      </div>
+      
     </div>
-  );
-};
+  )
+
+}
+
 
 export default InboxPage;

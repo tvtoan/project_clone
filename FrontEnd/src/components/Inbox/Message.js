@@ -1,12 +1,16 @@
 import React from "react";
+import styles from "./Message.module.scss";
+import classNames from "classnames/bind";
 
-const Message = ({message}) => {
-    return (
-        <div>
-            <h3>Sender ID: {message.senderId}</h3>
-            <p>{message.text}</p>
-        </div>
-    )
-}
+const cx = classNames.bind(styles);
+
+const Message = ({ message, isCurrentUser }) => {
+  return (
+    <div className={cx("message", { "current-user": isCurrentUser })}>
+        <p>{message.senderId}</p>
+      <p>{message.text}</p>
+    </div>
+  );
+};
 
 export default Message;

@@ -67,9 +67,19 @@ export const logout = () => {
   localStorage.removeItem("token");
 };
 
+export const getUsers = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/users`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all users", error.message);
+    throw error;
+  }
+};
+
 export const getUserByUsername = async (username) => {
   try {
-    const response = await axios.get(`${API_URL}/users`, {
+    const response = await axios.get(`${API_URL}/user`, {
       params: { username },
     });
     return response.data;
