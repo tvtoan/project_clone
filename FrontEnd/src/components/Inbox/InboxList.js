@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createMessage, getMessages } from "../../services/inboxService";
 
 import Message from "./Message";
@@ -10,11 +10,11 @@ const cx = classNames.bind(styles);
 const InboxList = ({ receiverId, currentUser }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  
+  const messagesEndRef = useRef(null);
+
   const fetchMessages = async () => {
     try {
       const data = await getMessages(receiverId);
-      console.log(data)
       setMessages(data);
     } catch (error) {
       console.error("Error fetching messages: ", error);
@@ -28,8 +28,13 @@ const InboxList = ({ receiverId, currentUser }) => {
       // send message to receiver
       const sendMessage = await createMessage(receiverId, newMessage);
 
+      const messageWithSender = {
+        ...sendMessage,
+        senderId: currentUser,
+      }
+
       // update list message after send message
-      setMessages((prevMessages) => [...prevMessages, sendMessage]);
+      setMessages((prevMessages) => [...prevMessages, messageWithSender]);
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message", error);
@@ -37,9 +42,19 @@ const InboxList = ({ receiverId, currentUser }) => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if(e.key === "Enter") {
+      handleSendMessage();
+    }
+  }
+
   useEffect(() => {
     if (receiverId) fetchMessages(); // get messages from receiver
   }, [receiverId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({behavior: "smooth", block: "end"})
+  }, [messages])
 
   return (
     <div className={cx("inbox-list")}>
@@ -49,13 +64,15 @@ const InboxList = ({ receiverId, currentUser }) => {
         ) : (
           <ul>
             {messages.map((message) => (
-              <li key={message._id}>
+              <li key = {message._id}  >
                 <Message
+                  key={message._id}
                   message={message}
-                  isCurrentUser={message.senderId === currentUser.id}
+                  isCurrentUser={message.senderId._id === currentUser._id}
                 />
-                
-              </li>
+                <div ref={messagesEndRef}/>
+              </li >
+              
             ))}
           </ul>
         )}
@@ -68,12 +85,14 @@ const InboxList = ({ receiverId, currentUser }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message"
           className={cx("input")}
+          onKeyDown={handleKeyPress}
         />
 
-        <button onClick={handleSendMessage} className={cx("send-button")}>
+        <button  onClick={handleSendMessage} className={cx("send-button")}>
           Send
         </button>
       </div>
+      
     </div>
   );
 };

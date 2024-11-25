@@ -91,3 +91,13 @@ export const getUserByUsername = async (username) => {
     throw error;
   }
 };
+
+export const getUserById = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/${userId}`)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user by id", error);
+    throw error;
+  }
+};
