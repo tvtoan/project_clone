@@ -79,6 +79,16 @@ export const getPosts = async(req, res) => {
     }
 };
 
+export const getPostsByUserId = async (req, res) => {
+    try {
+        const posts = await Post.find({userId: req.params.userId})
+        .populate('userId', 'username')
+        .populate('comments.userId', 'username');
+        res.status(200).json(posts);
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
+};
 
 export const deletePost = async (req, res) => {
     try {

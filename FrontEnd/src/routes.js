@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import InboxPage from "./pages/InboxPage";
 import StoryPage from "./pages/StoryPage";
 import VideoPage from "./pages/VideoPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
                 <Route path="/inbox/:receiverId" element={<InboxPage />} />
                 <Route path="/story/:id" element={<StoryPage />} />
                 <Route path="/video" element={<VideoPage />} />
+                <Route path="/profile" element= {<ProfilePage /> } />
              
 
               {/* Route page not found (404) */}

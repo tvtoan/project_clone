@@ -8,7 +8,7 @@ const PostList = ({ userId }) => {
   const fetchPosts = async () => {
       try {
         const data = await getPosts();
-        setPosts(data);
+        setPosts(data.reverse());
       } catch (error) {
         console.error("Error fetching posts", error);
       }

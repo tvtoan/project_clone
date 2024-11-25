@@ -13,7 +13,7 @@ const VideoList = ({userId}) => {
   const fetchVideos = async () => {
     try {
       const data = await getVideos();
-      setVideos(data);
+      setVideos(data.reverse());
     } catch (error) {
       console.error("Error fetching videos:", error);
     }

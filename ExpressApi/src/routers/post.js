@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPost, getPost,getPosts, deletePost, addComment } from '../controllers/postController';
+import { createPost, getPost,getPosts, deletePost, addComment, getPostsByUserId } from '../controllers/postController';
 import authMiddleware from '../middlewares/authMiddleware';
 import multer from 'multer';
 import path from 'path';
@@ -25,6 +25,7 @@ router.post('/', authMiddleware, upload.single('image'),(req, res, next) => {
 router.post("/:id/comments", authMiddleware, addComment);
 router.get('/', authMiddleware, getPosts);
 router.get('/:id', authMiddleware, getPost);
+router.get('/user/:userId', authMiddleware, getPostsByUserId);
 router.delete('/:id', authMiddleware, deletePost);
 
 export default router;

@@ -25,7 +25,9 @@ const InboxPage = () => {
     }
   };
   useEffect(() => {
-    fetchReceiverData();
+    if (receiverId) {
+      fetchReceiverData();
+    }
   }, [receiverId]);
 
   if (loading) {
@@ -43,13 +45,13 @@ const InboxPage = () => {
           <UserList />
         </div>
         <div className={cx("message-section")}>
-          {receiverId ? (
+          {receiverId && receiver ? (
             <>
               <div className={cx("receiver-info")}>
                 <img src={receiver?.profilePicture || ""} />
                 <p>{receiver.username}</p>
               </div>
-              <div className={cx('chat-area')}>
+              <div className={cx("chat-area")}>
                 <InboxList receiverId={receiverId} currentUser={user} />
               </div>
             </>
