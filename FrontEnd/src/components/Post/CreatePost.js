@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { createPost } from "../../services/postService";
 import styles from "./CreatePost.module.scss";
 import classNames from "classnames/bind";
-import User from "../Shared/User";
+import { useAuth } from "../../context/AuthContext";
 
 const cx = classNames.bind(styles);
 
 const CreatePost = ({ onPostCreated, userId }) => {
+  const {user} = useAuth();
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file); // Lưu file vào state
@@ -55,7 +55,10 @@ const CreatePost = ({ onPostCreated, userId }) => {
   return (
     <form onSubmit={handleSubmit} className={cx("form")}>
       <div className={cx("form-user")}>
-        <User />
+        <img
+          src = {`http://localhost:3001${user.profilePicture}`}
+          className = {cx('img')}
+        />
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}

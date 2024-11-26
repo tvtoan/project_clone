@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./InboxPage.module.scss";
 import classNames from "classnames/bind";
 import InboxList from "../components/Inbox/InboxList";
 import UserList from "../components/Shared/UserList";
 import Layout from "../../src/components/Layout/Layout";
 import { getUserById } from "../services/authService";
+
 const cx = classNames.bind(styles);
 
 const InboxPage = () => {
   const { receiverId } = useParams();
   const { user, loading } = useAuth();
   const [receiver, setReceiver] = useState(null);
+  const navigate = useNavigate();
   console.log(receiver);
   console.log(user);
 
@@ -38,6 +40,10 @@ const InboxPage = () => {
     return <div> Please login to view your inbox</div>;
   }
 
+  const handleAvatarClick = () => {
+    navigate(`/profile/${receiverId}`);
+  };
+
   return (
     <Layout>
       <div className={cx("inbox-page")}>
@@ -47,8 +53,9 @@ const InboxPage = () => {
         <div className={cx("message-section")}>
           {receiverId && receiver ? (
             <>
-              <div className={cx("receiver-info")}>
-                <img src={receiver?.profilePicture || ""} />
+              <div className={cx("receiver-info")} onClick={handleAvatarClick}>
+                <img src={`http://localhost:3001${receiver.profilePicture}`} 
+                onClick={handleAvatarClick} />
                 <p>{receiver.username}</p>
               </div>
               <div className={cx("chat-area")}>

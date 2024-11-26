@@ -3,15 +3,22 @@ import styles from "./Header.module.scss";
 import classNames from "classnames/bind";
 
 import Icons from "./Icon";
-import User from "./User";
 import { getUserByUsername } from "../../services/authService";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 const Header = () => {
+  const { user } = useAuth();
   const [active, setActive] = useState("home");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  
 
+  const navigate = useNavigate();
+  const handleAvatarClick = () => {
+    navigate(`/profile/${user._id}`)
+  }
   const handleSearch = async (e) => {
     const query = e.target.value.trim().toLowerCase();
     setSearchTerm(query);
@@ -43,7 +50,7 @@ const Header = () => {
             value={searchTerm}
             onChange={handleSearch}
           />
-           {searchResults.length > 0 && (
+          {searchResults.length > 0 && (
             <div className={cx("search-results")}>
               {searchResults.map((user) => (
                 <div key={user._id} className={cx("search-result-item")}>
@@ -88,8 +95,12 @@ const Header = () => {
       </div>
       <div className={cx("header-right")}>
         <Icons.Messenger className={cx("header-icon")} />
-        <Icons.Notification className={cx("header-icon")} />
-        <User className={cx("header-icon")} />
+        <Icons.Notification className={cx("header-icon")}  />
+        <img
+          src={`http://localhost:3001${user?.profilePicture}`}
+          className={cx("img")}
+          onClick={handleAvatarClick}
+        />
       </div>
     </div>
   );

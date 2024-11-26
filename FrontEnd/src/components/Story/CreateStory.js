@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { createStory } from "../../services/storyService";
 import styles from "./CreateStory.module.scss";
 import classNames from "classnames/bind";
-import User from "../Shared/User";
 import Icons from "../Shared/Icon";
 
 const cx = classNames.bind(styles);

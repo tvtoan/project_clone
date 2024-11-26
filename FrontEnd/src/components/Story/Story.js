@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./Story.module.scss";
 import classNames from "classnames/bind";
-import User from "../Shared/User";
 import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
@@ -25,7 +24,10 @@ const Story = ({ story }) => {
 
           <div className={cx('avatar')}>
 
-           <User  /> 
+           <img
+             src={`http://localhost:3001${story.userId?.profilePicture}`|| "Default"}
+             className={cx('img')}
+           /> 
           </div>
           <p className={cx("story-user")}>{story.userId?.username || "Unknown User"}</p>
         </div>

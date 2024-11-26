@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Video.module.scss";
 import classNames from "classnames/bind";
-import User from "../Shared/User";
-import {  formatDistanceToNowStrict, parseISO } from "date-fns";
+import { formatDistanceToNowStrict, parseISO } from "date-fns";
 import Icons from "../Shared/Icon";
 import { addComment } from "../../services/videoService";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const cx = classNames.bind(styles);
 
@@ -13,10 +14,17 @@ const formatVideoDate = (dateString) => {
   return formatDistanceToNowStrict(parsedDate, { addSuffix: true });
 };
 const Video = ({ video }) => {
+  const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(video.comments || []);
+  console.log(video);
 
   const timeAgo = formatVideoDate(video.createdAt);
+
+  const navigate = useNavigate();
+  const handleAvatarClick = () => {
+    navigate(`/profile/${video.userId._id}`);
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +42,11 @@ const Video = ({ video }) => {
   return (
     <div className={cx("video")}>
       <div className={cx("user-info")}>
-        <User />
+        <img
+          src={`http://localhost:3001${video.userId?.profilePicture}`}
+          className={cx("img")}
+          onClick={video.userId ? handleAvatarClick : undefined}
+        />{" "}
         <p>{video.userId?.username || "Unknown User"}</p>
       </div>
       <p className={cx("time-ago")}>{timeAgo}</p>
@@ -60,8 +72,12 @@ const Video = ({ video }) => {
               return (
                 <li key={comment._id} className={cx("comment-item")}>
                   <div className={cx("comment-details")}>
-                      <User />
-                    <div className={cx('comment-user')}>
+                    <img
+                      src={`http://localhost:3001${comment.userId?.profilePicture}`}
+                      className={cx("img")}
+                      
+                    />
+                    <div className={cx("comment-user")}>
                       <strong className={cx("comment-username")}>
                         {comment.userId?.username || "Unknown User"}
                       </strong>

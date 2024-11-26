@@ -9,10 +9,9 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-left:auto;
+  margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
-  
 }
 
 .user-info {
@@ -58,7 +57,6 @@
   }
 }
 
-
 .comments {
   margin-top: 20px;
 }
@@ -72,7 +70,7 @@
 
 .post-time {
   font-size: 14px;
-  color:#b0b3b8;
+  color: #b0b3b8;
 }
 
 .comments-list {
@@ -93,6 +91,12 @@
   }
 }
 
+.img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 .comment-user {
   display: flex;
   gap: 10px;
@@ -113,7 +117,6 @@
   font-style: 14px;
 }
 
-
 .no-comments {
   color: #d1d1d1;
   font-size: 14px;
@@ -131,11 +134,10 @@
   font-style: 14px;
   outline: none;
   transition: border-color 0.3s ease;
-  
+
   &:focus {
-    border-color:#007bff;
+    border-color: #007bff;
   }
-  
 }
 .submit-comment {
   margin-left: 8px;
@@ -153,23 +155,21 @@
   color: #b0b3b8;
 }
 
-
 .comment-input {
   flex: 1;
   height: 30px;
   border-radius: 10px;
-  border:none;
+  border: none;
   padding-left: 5px;
   background-color: #333334;
-  color:white;
-  
+  color: white;
+
   :focus {
-    border:none;
+    border: none;
   }
-  
 }
 
 .button-submit {
-  background-color:rgba(37, 39, 40, 0.8) ;
+  background-color: rgba(37, 39, 40, 0.8);
   border: none;
 }

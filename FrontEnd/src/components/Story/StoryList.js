@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteStory, getStories } from "../../services/storyService";
+import { getStories } from "../../services/storyService";
 import Story from "./Story";
 import styles from "./StoryList.module.scss";
 import classNames from "classnames/bind";

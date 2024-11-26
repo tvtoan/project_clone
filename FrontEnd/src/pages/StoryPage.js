@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { deleteStory, getStoryById } from "../services/storyService";
 import styles from "./Story.module.scss";
 import classNames from "classnames/bind";
-import User from "../components/Shared/User";
 import Icons from "../components/Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 
@@ -55,7 +54,10 @@ const StoryPage = () => {
       {story && story.userId ? (
         <div className={cx("story-content")}>
           <div className={cx("user-info")}>
-            <User />
+            <img 
+               src={`http://localhost:3001${story.userId.profilePicture}`}
+               className={cx('img')}
+            />
             <p>{story.userId.username}</p>
           </div>
           <p className={cx("time-ago")}>{timeAgo}</p>

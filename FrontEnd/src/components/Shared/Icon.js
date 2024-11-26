@@ -58,7 +58,7 @@ export const Icons = {
     <IconWithTooltip
       icon={FaFacebookF}
       tooltipText="Facebook"
-      link="/"
+      link="/home"
       style={{ fill: "#007bff" }}
     />
   ),
@@ -69,13 +69,13 @@ export const Icons = {
     <IconWithTooltip icon={FaUserFriends} tooltipText="Friend" link="/friend" />
   ),
   Search: () => (
-    <IconWithTooltip icon={FaSearch} tooltipText="Search" link="/search" />
+    <IconWithTooltip icon={FaSearch} tooltipText="Search"  />
   ),
   Setting: () => (
     <IconWithTooltip
       icon={AiOutlineSetting}
       tooltipText="Settings"
-      link="/setting"
+      link=""
     />
   ),
   Video: () => (
@@ -85,22 +85,22 @@ export const Icons = {
     <IconWithTooltip
       icon={FaFacebookMessenger}
       tooltipText="Messenger"
-      link="inbox"
+      link="/inbox/:id"
     />
   ),
-  Add: () => <IconWithTooltip icon={MdAdd} tooltipText="Add" link="/add" />,
+  Add: () => <IconWithTooltip icon={MdAdd} tooltipText="Add"  />,
   Notification: () => (
     <IconWithTooltip
       icon={FaBell}
       tooltipText="Notification"
-      link="notification"
+      
     />
   ),
   Market: () => (
-    <IconWithTooltip icon={FaStore} tooltipText="Market" link="/market" />
+    <IconWithTooltip icon={FaStore} tooltipText="Market"  />
   ),
   Group: () => (
-    <IconWithTooltip icon={MdOutlineGroup} tooltipText="Group" link="/group" />
+    <IconWithTooltip icon={MdOutlineGroup} tooltipText="Group" link="/inbox/:id" />
   ),
 
   Like: ({ onClick, className }) => (

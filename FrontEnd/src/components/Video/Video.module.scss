@@ -82,7 +82,7 @@
   border-bottom: 1px solid #333;
   padding-bottom: 10px;
   flex-direction: column;
-  list-style: none; 
+  list-style: none;
 }
 
 .comment-details {
@@ -94,6 +94,13 @@
 .comment-user {
   display: flex;
   flex-direction: column;
+}
+
+.img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .comment-username {
   margin-left: 10px;

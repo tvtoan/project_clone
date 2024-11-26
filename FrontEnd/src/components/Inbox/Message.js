@@ -14,7 +14,9 @@ const Message = ({ message, isCurrentUser }) => {
     }
   }, [showTime]);
 
-  const timeAgo = formatDistanceToNow(new Date(message.createdAt), {addSuffix: true});
+  const timeAgo = formatDistanceToNow(new Date(message.createdAt), {
+    addSuffix: true,
+  });
 
   return (
     <div
@@ -29,10 +31,11 @@ const Message = ({ message, isCurrentUser }) => {
           {message.senderId?.username || "Unknown User"}
         </p>
         <p className={cx("message-text")}>{message.text}</p>
-        {showTime && 
-          <div className = {cx('message-time')}>
+        {showTime && (
+          <div className={cx("message-time")}>
             <p>Sent: {timeAgo}</p>
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );

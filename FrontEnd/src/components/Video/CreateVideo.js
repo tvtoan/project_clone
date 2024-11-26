@@ -3,11 +3,12 @@ import styles from "./CreateVideo.module.scss";
 import classNames from "classnames/bind";
 import { createVideo } from "../../services/videoService";
 import Icons from "../Shared/Icon";
-import User from "../../components/Shared/User";
+import { useAuth } from "../../context/AuthContext";
 
 const cx = classNames.bind(styles);
 
 const CreateVideo = ({ onVideoCreated, userId }) => {
+  const { user } = useAuth();
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState("");
   const [video, setVideo] = useState(null);
@@ -62,7 +63,10 @@ const CreateVideo = ({ onVideoCreated, userId }) => {
       {error && <p className={cx("error")}>{error}</p>}
 
       <div className={cx("form-user")}>
-        <User />
+      <img
+  src={user && user.profilePicture ? `http://localhost:3001${user.profilePicture}` : "/default-avatar.png"}
+  className={cx("img")}
+/>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -83,8 +87,8 @@ const CreateVideo = ({ onVideoCreated, userId }) => {
           Your browser does not support the video tag
         </video>
       )}
-      <p className ={cx('line')}></p>
-      <div className={cx('form-button')}>
+      <p className={cx("line")}></p>
+      <div className={cx("form-button")}>
         <button
           type="button"
           onClick={handleFileClick}
