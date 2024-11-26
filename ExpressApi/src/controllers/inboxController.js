@@ -37,8 +37,8 @@ export const getMessages = async (req, res) => {
         { senderId: receiverId, receiverId: senderId },
       ],
     })
-    .populate("senderId", "username")
-    .populate("receiverId", "username")
+    .populate("senderId", "username profilePicture")
+    .populate("receiverId", "username profilePicture")
     .sort({ createAt: 1 });
 
     res.status(200).json(messages);

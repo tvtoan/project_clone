@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 const Story = ({ story }) => {
-
+ 
   const navigate = useNavigate();
 
   const handleStoryClick = () => {
@@ -27,7 +27,7 @@ const Story = ({ story }) => {
 
            <User  /> 
           </div>
-          <p className={cx("story-user")}>{story.userId.username}</p>
+          <p className={cx("story-user")}>{story.userId?.username || "Unknown User"}</p>
         </div>
 
       </div>

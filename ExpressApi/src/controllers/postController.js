@@ -49,7 +49,7 @@ export const addComment = async ( req, res) => {
         // update post after add comment
         const updatedPost = await Post.findById(postId).populate({
             path: "comments.userId",
-            select: "username"
+            select: "username profilePicture"
         })
         res.status(200).json(updatedPost);
     } catch (error ) {
@@ -60,8 +60,8 @@ export const addComment = async ( req, res) => {
 export const getPost = async (req, res) => {
     try { 
         const post = await Post.findById(req.params.id)
-        .populate('userId', 'username')
-        .populate('comments.userId', 'username');
+        .populate('userId', 'username profilePicture')
+        .populate('comments.userId', 'username profilePicture');
         res.status(200).json(post);
     } catch(error) {
         res.status(500).json({message: error.message});
@@ -71,8 +71,8 @@ export const getPost = async (req, res) => {
 export const getPosts = async(req, res) => {
     try {
         const posts = await Post.find()
-        .populate('userId', 'username')
-        .populate('comments.userId','username');
+        .populate('userId', 'username profilePicture')
+        .populate('comments.userId','username profilePicture');
         res.status(200).json(posts);
     } catch(error) {
         res.status(500).json({message: error.message});
@@ -82,8 +82,8 @@ export const getPosts = async(req, res) => {
 export const getPostsByUserId = async (req, res) => {
     try {
         const posts = await Post.find({userId: req.params.userId})
-        .populate('userId', 'username')
-        .populate('comments.userId', 'username');
+        .populate('userId', 'username profilePicture')
+        .populate('comments.userId', 'username profilePicture');
         res.status(200).json(posts);
     } catch(error) {
         res.status(500).json({message: error.message});

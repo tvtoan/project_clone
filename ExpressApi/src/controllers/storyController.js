@@ -20,7 +20,7 @@ export const createStory = async (req, res) => {
 
 export const getStories = async (req, res) => {
     try {
-        const stories = await Story.find().populate('userId', 'username');
+        const stories = await Story.find().populate('userId', 'username profilePicture');
         res.status(200).json(stories);
     } catch(error) {
         res.status(500).json({message: error.message});
@@ -29,10 +29,15 @@ export const getStories = async (req, res) => {
 
 export const getStory = async (req, res) => {
     try {
-        const story = await Story.findById(req.params.id).populate('userId', 'username');
+        const story = await Story.findById(req.params.id).populate('userId', 'username profilePicture');
         
         if(!story) {
             return res.status(404).json({message: 'Story not found'});
+        }
+        if(!story.userId) {
+            story.userId = {
+                username:"Unknown User",
+            };
         }
         res.status(200).json(story);
     } catch (error) {

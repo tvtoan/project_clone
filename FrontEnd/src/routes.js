@@ -25,7 +25,7 @@ const AppRoutes = () => {
                 <Route path="/inbox/:receiverId" element={<InboxPage />} />
                 <Route path="/story/:id" element={<StoryPage />} />
                 <Route path="/video" element={<VideoPage />} />
-                <Route path="/profile" element= {<ProfilePage /> } />
+                <Route path="/profile/:userId" element= {<ProfilePage /> } />
              
 
               {/* Route page not found (404) */}

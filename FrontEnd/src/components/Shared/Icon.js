@@ -16,7 +16,7 @@ import {
 import { FaFacebookF } from "react-icons/fa6";
 import { AiFillHome, AiOutlineSetting, AiOutlineLike } from "react-icons/ai";
 import { PiVideoFill, PiShareFat, PiUploadSimple } from "react-icons/pi";
-import { MdAdd, MdOutlineGroup, MdDelete } from "react-icons/md";
+import { MdAdd, MdOutlineGroup, MdDelete, MdOutlineLinkedCamera } from "react-icons/md";
 import { RiSendPlaneFill, RiCloseCircleFill } from "react-icons/ri";
 
 const cx = classNames.bind(styles);
@@ -114,7 +114,8 @@ export const Icons = {
   ),
   Upload: () => (<IconWithTooltip icon = {PiUploadSimple} tooltipText= "Upload" />),
   Delete: () => (<IconWithTooltip icon = {MdDelete} tooltipText={'Delete'} />),
-  Close: () => (<IconWithTooltip icon = {RiCloseCircleFill} tooltipText={"Close"} />)
+  Close: () => (<IconWithTooltip icon = {RiCloseCircleFill} tooltipText={"Close"} />),
+  Camera: () => (<IconWithTooltip icon = {MdOutlineLinkedCamera} tooltipText={"Change Img"} />),
   
 };
 

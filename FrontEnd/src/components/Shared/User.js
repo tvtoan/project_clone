@@ -14,10 +14,11 @@ const User = () => {
   return (
     
       <img
-        src= {user.profilePicture || anhBia }
+        src= {`http://localhost:3001${user.coverPicture}` || anhBia }
         alt="User Avatar"
         className={cx("img")}
       />
+      
   );
 };
 

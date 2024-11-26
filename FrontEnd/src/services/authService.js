@@ -29,8 +29,8 @@ export const login = async (email, password) => {
         },
       }
     );
-    if(response.data.token) {
-        localStorage.setItem("token", response.data.token);
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
     }
     return response.data;
   } catch (error) {
@@ -63,10 +63,6 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const logout = () => {
-  localStorage.removeItem("token");
-};
-
 export const getUsers = async () => {
   try {
     const response = await axios.get(`${API_URL}/users`);
@@ -94,10 +90,51 @@ export const getUserByUsername = async (username) => {
 
 export const getUserById = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/${userId}`)
+    const response = await axios.get(`${API_URL}/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user by id", error);
     throw error;
   }
+};
+
+export const updateProfilePicture = async (imageFile) => {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.put(`${API_URL}/profile-picture`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating profilePicture", error);
+    throw error;
+  }
+};
+
+export const updateCoverPicture = async (imageFile) => {
+  const formData = new FormData();
+  formData.append("image",imageFile);
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.put(`${API_URL}/cover-picture`, formData,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      }
+    })
+    return response.data;
+
+  } catch (error) {
+    console.error("Error updating cover picture", error);
+    throw error;
+  }
+};
+
+export const logout = () => {
+  localStorage.removeItem("token");
 };

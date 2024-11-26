@@ -18,7 +18,8 @@ const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(post.comments || []);
-  
+  console.log(post.userId?.profilePicture ||null);
+  console.log(post)
   const timeAgo = formatPostDate(post.createdAt);
   
 

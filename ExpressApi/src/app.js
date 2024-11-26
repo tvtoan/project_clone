@@ -25,6 +25,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use('/uploadStories', express.static('uploadStories'));
 app.use('/uploadVideos', express.static('uploadVideos'));
+app.use('/uploadPictures', express.static('uploadPictures'))
 
 // connect Db   
 console.log("Database URI:", process.env.DB_URI);

@@ -58,7 +58,7 @@ export const addComment = async (req, res) => {
         //update video after add comment
         const updatedVideo = await Video.findById(videoId).populate({
             path: "comments.userId",
-            select: "username"
+            select: "username profilePicture"
         })
         res.status(200).json(updatedVideo);
     }  catch(error) {
@@ -69,8 +69,8 @@ export const addComment = async (req, res) => {
 export const getVideo = async(req, res) => {
     try {
         const video = await Video.findById(req.params.id)
-        .populate('userId', 'username')
-        .populate('comments.userId', 'username');
+        .populate('userId', 'username profilePicture')
+        .populate('comments.userId', 'username profilePicture');
         if(!video) {
             res.status(404).json({message: 'Video not found'});
         }
@@ -83,8 +83,8 @@ export const getVideo = async(req, res) => {
 export const getVideos = async(req, res) => {
     try {
         const videos = await Video.find()
-        .populate('userId', 'username')
-        .populate('comments.userId', 'username')
+        .populate('userId', 'username profilePicture')
+        .populate('comments.userId', 'username profilePicture')
         .limit(10);
         res.status(200).json(videos)
     } catch( error) {

@@ -43,6 +43,7 @@ const StoryPage = () => {
     } catch (error) {
       console.error("Error deleting story", error);
       setError("Failed to delete the story");
+      navigate("/home");
     }
   };
   if (error) {

@@ -1,56 +1,97 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ProfilePage.module.scss";
 import classNames from "classnames/bind";
 import { useAuth } from "../context/AuthContext";
-import { getCurrentUser } from "../services/authService";
+import {
+  getUserById,
+  updateCoverPicture,
+  updateProfilePicture,
+} from "../services/authService";
 import { getPostsByUserId } from "../services/postService";
 import Layout from "../components/Layout/Layout";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/Post/CreatePost";
-import VideoList from "../components/Video/VideoList";
+import { useParams } from "react-router-dom";
+import Icons from "../components/Shared/Icon";
 
 const cx = classNames.bind(styles);
 
 const ProfilePage = () => {
   const { user } = useAuth();
+  const { userId: id } = useParams(); 
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
 
+  const profilePictureRef = useRef(null);
+  const coverPictureRef = useRef(null);
+
+  // get info user
+  const fetchUserData = async () => {
+    try {
+      if (!id) return;
+      const data = await getUserById(id); 
+      setUserData(data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  // get posts list
+  const fetchUserPosts = async () => {
+    try {
+      if (!id) return;
+      const posts = await getPostsByUserId(id);
+      setUserPosts(posts.reverse());
+    } catch (error) {
+      console.error("Error fetching user posts:", error);
+    }
+  };
+
   useEffect(() => {
-    if (!user) return;
-    const fetchUserData = async () => {
-      try {
-        const data = await getCurrentUser();
-        setUserData(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      }
-    };
-    const fetchUserPosts = async () => {
-      if (user && user._id) {
-        try {
-          const posts = await getPostsByUserId(user._id);
-          setUserPosts(posts || []);
-        } catch (error) {
-          console.error("Error fetching posts", error);
-        }
-      }
-    };
-
-    fetchUserPosts();
     fetchUserData();
-  }, [user]);
+    fetchUserPosts();
+  }, [id]);
 
-  console.log(userData);
-  console.log(userPosts);
+  const handleProfileClick = () => {
+    profilePictureRef.current?.click();
+  };
+
+  const handleCoverClick = () => {
+    coverPictureRef.current?.click();
+  };
+
+  const handleProfilePictureChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const updatedUser = await updateProfilePicture(file);
+        setUserData(updatedUser); // Update info user
+      } catch (error) {
+        console.error("Error updating profile picture:", error);
+      }
+    }
+  };
+
+  const handleCoverPictureChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const updatedUser = await updateCoverPicture(file);
+        setUserData(updatedUser); 
+      } catch (error) {
+        console.error("Error updating cover picture:", error);
+      }
+    }
+  };
+
+  const handlePostCreated = (newPost) => {
+    setUserPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
+
+ 
 
   if (!user) {
     return <p>You must log in to view this page</p>;
-  }
-
-  if (!userData) {
-    return <p>Loading...</p>;
   }
 
   return (
@@ -59,26 +100,53 @@ const ProfilePage = () => {
         {/* Cover Picture */}
         <div className={cx("cover-picture")}>
           <img
-            src={userData.coverPicture || "/default-cover.jpg"}
+            src={
+              userData?.coverPicture
+                ? `http://localhost:3001${userData.coverPicture}`
+                : "/default-cover.jpg"
+            }
             alt="Cover"
             className={cx("cover-img")}
           />
+          <input
+            ref={coverPictureRef}
+            type="file"
+            accept="image/*"
+            onChange={handleCoverPictureChange}
+            className={cx("upload-input")}
+          />
+          <button onClick={handleCoverClick} className={cx("custom-cover")}>
+            <Icons.Camera />
+          </button>
         </div>
 
         {/* User Info */}
         <div className={cx("user-info")}>
           <img
-            src={userData.profilePicture || "/default-avatar.jpg"}
+            src={
+              userData?.profilePicture
+                ? `http://localhost:3001${userData.profilePicture}`
+                : "/default-avatar.jpg"
+            }
             alt="Avatar"
             className={cx("avatar")}
           />
-          <p className={cx("username")}>{userData.username}</p>
+          <input
+            ref={profilePictureRef}
+            type="file"
+            accept="image/*"
+            onChange={handleProfilePictureChange}
+            className={cx("upload-input")}
+          />
+          <button onClick={handleProfileClick} className={cx("custom-profile")}>
+            <Icons.Camera />
+          </button>
+          <p className={cx("username")}>{userData?.username}</p>
         </div>
 
         {/* User Posts */}
         <div className={cx("user-posts")}>
-          {/* <CreatePost onPostCreated={handlePostCreated} userId={userId} /> */}
-
+          <CreatePost onPostCreated={handlePostCreated} userId={id} />
           <ul style={{ listStyle: "none" }}>
             {userPosts.map((post) => (
               <li key={post._id}>
@@ -86,9 +154,6 @@ const ProfilePage = () => {
               </li>
             ))}
           </ul>
-          <div style = {{width:"100%"}}>
-            {/* <VideoList /> */}
-          </div>
         </div>
       </div>
     </Layout>

@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs/dist/bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import user from "../model/user";
+import multer from "multer";
+import path from 'path';
 
 dotenv.config();
 
@@ -106,3 +108,49 @@ export const getUserById = async (req, res) => {
     return res.status(500).json({message: error.message});
   }
 };
+
+// multer config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb( null, "uploadPictures");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({storage});
+
+export const updateProfilePicture = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const imagePath = `/uploadPictures/${req.file.filename}`;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: imagePath},
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({message: error.message});
+  }
+};
+
+export const updateCoverPicture = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const imagePath = `/uploadPictures/${req.file.filename}`;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {coverPicture: imagePath},
+      { new: true }
+    );
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({message: error.message});
+  }
+};
+
+export const uploadSingle = upload.single("image")
