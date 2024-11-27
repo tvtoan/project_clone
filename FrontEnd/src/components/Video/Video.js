@@ -6,6 +6,7 @@ import Icons from "../Shared/Icon";
 import { addComment } from "../../services/videoService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import defaultAvt from "../../img/default.jpg";
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +18,6 @@ const Video = ({ video }) => {
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(video.comments || []);
-  console.log(video);
 
   const timeAgo = formatVideoDate(video.createdAt);
 
@@ -43,7 +43,11 @@ const Video = ({ video }) => {
     <div className={cx("video")}>
       <div className={cx("user-info")}>
         <img
-          src={`http://localhost:3001${video.userId?.profilePicture}`}
+          src={
+            video.userId
+              ? `http://localhost:3001${video.userId?.profilePicture}`
+              : defaultAvt
+          }
           className={cx("img")}
           onClick={video.userId ? handleAvatarClick : undefined}
         />{" "}
@@ -67,15 +71,17 @@ const Video = ({ video }) => {
         <ul className={cx("comment-list")}>
           {Array.isArray(comments) && comments.length > 0 ? (
             comments.map((comment) => {
-              console.log(comment);
               const commentTime = formatVideoDate(comment.createAt);
               return (
                 <li key={comment._id} className={cx("comment-item")}>
                   <div className={cx("comment-details")}>
                     <img
-                      src={`http://localhost:3001${comment.userId?.profilePicture}`}
+                      src={
+                        comment.userId
+                          ? `http://localhost:3001${comment.userId?.profilePicture}`
+                          : defaultAvt
+                      }
                       className={cx("img")}
-                      
                     />
                     <div className={cx("comment-user")}>
                       <strong className={cx("comment-username")}>

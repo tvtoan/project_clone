@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
 import classNames from "classnames/bind";
+import {
+  FaBell,
+  FaFacebookMessenger,
+  FaSearch,
+  FaUserFriends,
+  FaStore,
+} from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa6";
+import { PiVideoFill } from "react-icons/pi";
+import { MdOutlineGroup } from "react-icons/md";
+import { AiFillHome } from "react-icons/ai";
 
-import Icons from "./Icon";
 import { getUserByUsername } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import defaultAvt from "../../img/default.jpg";
 
 const cx = classNames.bind(styles);
 const Header = () => {
@@ -13,12 +24,16 @@ const Header = () => {
   const [active, setActive] = useState("home");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  
 
   const navigate = useNavigate();
   const handleAvatarClick = () => {
-    navigate(`/profile/${user._id}`)
-  }
+    navigate(`/profile/${user._id}`);
+  };
+  console.log(active);
+
+  const handleIconClick = (iconName) => {
+    setActive(iconName);
+  };
   const handleSearch = async (e) => {
     const query = e.target.value.trim().toLowerCase();
     setSearchTerm(query);
@@ -35,15 +50,13 @@ const Header = () => {
       setSearchResults([]);
     }
   };
+
   return (
     <div className={cx("header")}>
       <div className={cx("header-left")}>
-        <Icons.Facebook
-          className={cx("header-logo")}
-          style={{ color: "blue" }}
-        />
+        <FaFacebookF className={cx("header-logo")} />
         <div className={cx("header-search")}>
-          <Icons.Search />
+          <FaSearch className={cx("header-icon")} style={{ padding: "10px" }} />
           <input
             type="text"
             placeholder="Tìm kiếm"
@@ -54,6 +67,15 @@ const Header = () => {
             <div className={cx("search-results")}>
               {searchResults.map((user) => (
                 <div key={user._id} className={cx("search-result-item")}>
+                  <img
+                    src={
+                      user.profilePicture
+                        ? `http://localhost:3001${user?.profilePicture}`
+                        : defaultAvt
+                    }
+                    className={cx("img")}
+                  />
+
                   {user.username}
                 </div>
               ))}
@@ -64,40 +86,53 @@ const Header = () => {
       <div className={cx("header-center")}>
         <div
           className={cx("header-options", { active: active === "home" })}
-          onClick={() => setActive("home")}
+          onClick={() => handleIconClick("home")}
         >
-          <Icons.Home />
+          <AiFillHome
+            className={cx("header-icon")}
+            onClick={() => navigate("/home")}
+          />
         </div>
         <div
           className={cx("header-options", { active: active === "friend" })}
-          onClick={() => setActive("friend")}
+          onClick={() => handleIconClick("friend")}
         >
-          <Icons.Friend />
+          <FaUserFriends
+            className={cx("header-icon")}
+            onClick={() => navigate("/home")}
+          />
         </div>
         <div
           className={cx("header-options", { active: active === "video" })}
-          onClick={() => setActive("video")}
+          onClick={() => handleIconClick("video")}
         >
-          <Icons.Video />
+          <PiVideoFill
+            className={cx("header-icon")}
+            onClick={() => navigate("/video")}
+          />
         </div>
-        <div
-          className={cx("header-options", { active: active === "market" })}
-          onClick={() => setActive("market")}
-        >
-          <Icons.Market />
+        <div className={cx("header-options")}>
+          <FaStore className={cx("header-icon")} />
         </div>
-        <div
-          className={cx("header-options", { active: active === "group" })}
-          onClick={() => setActive("group")}
-        >
-          <Icons.Group />
+        <div className={cx("header-options")}>
+          <MdOutlineGroup
+            className={cx("header-icon", { active: active === "inbox" })}
+            onClick={() => handleIconClick("inbox")}
+          />
         </div>
       </div>
       <div className={cx("header-right")}>
-        <Icons.Messenger className={cx("header-icon")} />
-        <Icons.Notification className={cx("header-icon")}  />
+        <FaFacebookMessenger
+          className={cx("header-icon")}
+          onClick={() => navigate("/inbox/:id")}
+        />
+        <FaBell className={cx("header-icon")} />
         <img
-          src={`http://localhost:3001${user?.profilePicture}`}
+          src={
+            user?.profilePicture
+              ? `http://localhost:3001${user?.profilePicture}`
+              : defaultAvt
+          }
           className={cx("img")}
           onClick={handleAvatarClick}
         />

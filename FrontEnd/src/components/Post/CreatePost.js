@@ -3,7 +3,7 @@ import { createPost } from "../../services/postService";
 import styles from "./CreatePost.module.scss";
 import classNames from "classnames/bind";
 import { useAuth } from "../../context/AuthContext";
-
+import defaultAvt from '../../img/default.jpg';
 const cx = classNames.bind(styles);
 
 const CreatePost = ({ onPostCreated, userId }) => {
@@ -56,7 +56,7 @@ const CreatePost = ({ onPostCreated, userId }) => {
     <form onSubmit={handleSubmit} className={cx("form")}>
       <div className={cx("form-user")}>
         <img
-          src = {`http://localhost:3001${user.profilePicture}`}
+          src = {user?.profilePicture? `http://localhost:3001${user.profilePicture}` : defaultAvt}
           className = {cx('img')}
         />
         <textarea

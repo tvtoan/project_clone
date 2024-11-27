@@ -7,6 +7,7 @@ import InboxList from "../components/Inbox/InboxList";
 import UserList from "../components/Shared/UserList";
 import Layout from "../../src/components/Layout/Layout";
 import { getUserById } from "../services/authService";
+import defaultAvt from '../img/default.jpg';
 
 const cx = classNames.bind(styles);
 
@@ -15,8 +16,7 @@ const InboxPage = () => {
   const { user, loading } = useAuth();
   const [receiver, setReceiver] = useState(null);
   const navigate = useNavigate();
-  console.log(receiver);
-  console.log(user);
+ 
 
   const fetchReceiverData = async () => {
     try {
@@ -54,7 +54,7 @@ const InboxPage = () => {
           {receiverId && receiver ? (
             <>
               <div className={cx("receiver-info")} onClick={handleAvatarClick}>
-                <img src={`http://localhost:3001${receiver.profilePicture}`} 
+                <img src={receiver.profilePicture?`http://localhost:3001${receiver.profilePicture}`:defaultAvt} 
                 onClick={handleAvatarClick} />
                 <p>{receiver.username}</p>
               </div>

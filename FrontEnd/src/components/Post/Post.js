@@ -6,7 +6,7 @@ import Icons from "../Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { addComment } from "../../services/postService";
 import { useNavigate } from "react-router-dom";
-
+import defaultAtv from "../../img/default.jpg";
 const cx = classNames.bind(styles);
 
 const formatPostDate = (dateString) => {
@@ -19,7 +19,6 @@ const Post = ({ post }) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(post.comments || []);
   const timeAgo = formatPostDate(post.createdAt);
-console.log(post)
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
@@ -46,7 +45,11 @@ console.log(post)
     <div className={cx("post")}>
       <div className={cx("user-info")}>
         <img
-          src={`http://localhost:3001${post.userId?.profilePicture}`}
+          src={
+            post.userId
+              ? `http://localhost:3001${post.userId?.profilePicture}`
+              : defaultAtv
+          }
           className={cx("img")}
           onClick={post.userId ? handleAvatarClick : undefined}
         />
@@ -69,7 +72,7 @@ console.log(post)
           className={cx("button-icon", { active: isLiked })}
           onClick={handleLikeClick}
         />
-        <Icons.Comment className={cx("button-icon")} />
+        <Icons.Comment className={cx("button")} />
         <Icons.Share className={cx("button-icon")} />
       </div>
       <div className={cx("comments")}>
@@ -82,9 +85,12 @@ console.log(post)
                 <li key={comment._id} className={cx("comment-item")}>
                   <div className={cx("comment-user")}>
                     <img
-                      src={`http://localhost:3001${comment.userId?.profilePicture}`}
+                      src={
+                        comment.userId
+                          ? `http://localhost:3001${comment.userId?.profilePicture}`
+                          : defaultAtv
+                      }
                       className={cx("img")}
-                     
                     />
                     <div className={cx("comment-details")}>
                       <strong className={cx("comment-username")}>

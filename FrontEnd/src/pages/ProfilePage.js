@@ -13,6 +13,7 @@ import Post from "../components/Post/Post";
 import CreatePost from "../components/Post/CreatePost";
 import { useParams } from "react-router-dom";
 import Icons from "../components/Shared/Icon";
+import defaultAvt from '../img/default.jpg';
 
 const cx = classNames.bind(styles);
 
@@ -126,7 +127,7 @@ const ProfilePage = () => {
             src={
               userData?.profilePicture
                 ? `http://localhost:3001${userData.profilePicture}`
-                : "/default-avatar.jpg"
+                : defaultAvt
             }
             alt="Avatar"
             className={cx("avatar")}

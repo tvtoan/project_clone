@@ -5,7 +5,7 @@ import styles from "./Story.module.scss";
 import classNames from "classnames/bind";
 import Icons from "../components/Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
-
+import defaultAvt from "../img/default.jpg";
 const cx = classNames.bind(styles);
 
 const formatStoryDate = (dateString) => {
@@ -54,9 +54,13 @@ const StoryPage = () => {
       {story && story.userId ? (
         <div className={cx("story-content")}>
           <div className={cx("user-info")}>
-            <img 
-               src={`http://localhost:3001${story.userId.profilePicture}`}
-               className={cx('img')}
+            <img
+              src={
+                story.userId?.profilePicture
+                  ? `http://localhost:3001${story.userId.profilePicture}`
+                  : defaultAvt
+              }
+              className={cx("img")}
             />
             <p>{story.userId.username}</p>
           </div>

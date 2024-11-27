@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Story.module.scss";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
+import defaultAvt from '../../img/default.jpg';
 
 const cx = classNames.bind(styles);
 
@@ -25,7 +26,7 @@ const Story = ({ story }) => {
           <div className={cx('avatar')}>
 
            <img
-             src={`http://localhost:3001${story.userId?.profilePicture}`|| "Default"}
+             src={story.userId?`http://localhost:3001${story.userId?.profilePicture}`: defaultAvt}
              className={cx('img')}
            /> 
           </div>

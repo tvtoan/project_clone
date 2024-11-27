@@ -7,6 +7,7 @@ import Layout from "../components/Layout/Layout";
 
 import styles from "./HomePage.module.scss";
 import classNames from "classnames/bind";
+import UserList from "../components/Shared/UserList";
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,8 @@ const HomePage = () => {
           </div>
         </div>
         <div className={cx("right-column")}>
-          <div>List friend</div>
+          <h2 className = {cx('title')}>List friend</h2>
+          <UserList />
         </div>
       </div>
     </Layout>

@@ -48,9 +48,9 @@
 }
 
 .button-icon {
-  color: #e4e4eb;
+  color: #1212c7;
   transition: color 0.2s ease-in-out;
-
+  background-color: red;
   &.active {
     color: #007bff !important;
     transform: scale(1.2);

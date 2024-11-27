@@ -3,8 +3,9 @@ import Tippy from "@tippyjs/react";
 import { Link } from "react-router-dom";
 import "tippy.js/dist/tippy.css";
 import styles from "./Icon.module.scss";
+import "./index.scss"
 import classNames from "classnames/bind";
-
+import "./../Post/Post.module.scss"
 import {
   FaBell,
   FaFacebookMessenger,
@@ -106,7 +107,9 @@ export const Icons = {
   Like: ({ onClick, className }) => (
     <IconWithTooltip icon={AiOutlineLike} tooltipText="Like" />
   ),
-  Comment: () => <IconWithTooltip icon={FaRegComment} tooltipText="Comment" />,
+  Comment: ({className}) =>{
+     return <IconWithTooltip className={className} icon={FaRegComment} tooltipText="Comment" />
+  },
   Share: () => <IconWithTooltip icon={PiShareFat} tooltipText="Share" />,
   SubmitComment: () => (
 

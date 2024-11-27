@@ -4,6 +4,8 @@ import classNames from "classnames/bind";
 import { createVideo } from "../../services/videoService";
 import Icons from "../Shared/Icon";
 import { useAuth } from "../../context/AuthContext";
+import defaultAvt from '../../img/default.jpg';
+
 
 const cx = classNames.bind(styles);
 
@@ -63,10 +65,14 @@ const CreateVideo = ({ onVideoCreated, userId }) => {
       {error && <p className={cx("error")}>{error}</p>}
 
       <div className={cx("form-user")}>
-      <img
-  src={user && user.profilePicture ? `http://localhost:3001${user.profilePicture}` : "/default-avatar.png"}
-  className={cx("img")}
-/>
+        <img
+          src={
+            user && user.profilePicture
+              ? `http://localhost:3001${user.profilePicture}`
+              : defaultAvt
+          }
+          className={cx("img")}
+        />
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}

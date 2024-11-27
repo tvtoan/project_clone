@@ -16,9 +16,14 @@
   color: #e4e6eb;
   width: 100vw;
   height: 56px;
-  
-  
-  
+}
+.header-logo {
+  background-color: #0866ff;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 8px;
 }
 
 .header-left {
@@ -34,19 +39,60 @@
   display: flex;
   align-items: center;
   background-color: #242526;
+  position: relative;
   border-radius: 20px;
   margin: 5px;
 
   input {
     border: none;
     outline: none;
-    padding: 5px;
+    padding: 12px;
     width: 240px;
     background-color: transparent;
     color: #e4e6eb;
+    
 
     &::placeholder {
       color: #b0b3b8;
+    }
+  }
+}
+
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #252728;
+  border: none;
+  border-radius:0 10px 10px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  gap: 20px;
+
+  .search-result-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: #686363;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .username {
+      font-size: 14px;
+      color: #333;
     }
   }
 }
@@ -70,8 +116,11 @@
     color: #ccc;
     background-color: #444;
   }
+  &.active{
+    color: blue;
+  }
+  
 }
-
 
 .header-right {
   display: flex;
@@ -81,6 +130,9 @@
 }
 
 .header-icon {
+  width: 25px;
+  height: 25px;
+  
   color: #e4e6eb;
 
   &:hover {
@@ -98,7 +150,6 @@
   .header-center {
     display: none;
   }
-   
 }
 
 @media (max-width: 1024px) {
@@ -106,7 +157,6 @@
     display: none;
   }
 }
-
 
 @media (min-width: 768px) and (max-width: 900px) {
   .header-search input {
@@ -116,6 +166,6 @@
 
 @media (min-width: 1025px) {
   .header-search input {
-    display: block; 
+    display: block;
   }
 }

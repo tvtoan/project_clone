@@ -32,13 +32,15 @@ const Login = () => {
 
   return (
     <div className={cx("login-page")}>
-        <div className={cx('left-section')} >
-            <h1 className = {cx('logo')}>Facebook</h1>
-            <p className={cx('description')}> Connect with friends and the world around on Facebook </p>
-
-        </div>
+      <div className={cx("left-section")}>
+        <h1 className={cx("logo")}>Facebook</h1>
+        <p className={cx("description")}>
+          {" "}
+          Connect with friends and the world around on Facebook{" "}
+        </p>
+      </div>
       <div className={cx("right-section")}>
-        <form onSubmit={handleLogin} className={cx('form')}>
+        <form onSubmit={handleLogin} className={cx("form")}>
           <input
             type="email"
             placeholder="Email"
@@ -58,12 +60,15 @@ const Login = () => {
           <button type="submit" className={cx("login-button")}>
             Login
           </button>
-          <a href ="#" className={cx('forgot-password')}> Forgot password</a>
-          <div className = {cx('line')}></div>
+          <a href="#" className={cx("forgot-password")}>
+            {" "}
+            Forgot password
+          </a>
+          <div className={cx("line")}></div>
           <button
             type="button"
-            className={cx('register-button')}
-            onClick={() => navigate('/register')}
+            className={cx("register-button")}
+            onClick={() => navigate("/register")}
           >
             Create New Account
           </button>
