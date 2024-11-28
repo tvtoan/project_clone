@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import Icons from "../components/Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import defaultAvt from "../img/default.jpg";
+import { useAuth } from "../context/AuthContext";
 const cx = classNames.bind(styles);
 
 const formatStoryDate = (dateString) => {
@@ -16,11 +17,19 @@ const formatStoryDate = (dateString) => {
 
 const StoryPage = () => {
   const { id } = useParams();
+  const {user, loading} = useAuth();
   const navigate = useNavigate();
   const [story, setStory] = useState({});
   const [error, setError] = useState("");
 
   const timeAgo = formatStoryDate(story.createdAt);
+
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/"); 
+    }
+  }, [user, loading, navigate]);
 
   const fetchStory = async () => {
     try {

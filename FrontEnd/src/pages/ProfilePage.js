@@ -11,20 +11,28 @@ import { getPostsByUserId } from "../services/postService";
 import Layout from "../components/Layout/Layout";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/Post/CreatePost";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, userNavigate } from "react-router-dom";
 import Icons from "../components/Shared/Icon";
 import defaultAvt from '../img/default.jpg';
 
 const cx = classNames.bind(styles);
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { userId: id } = useParams(); 
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+  const navigate = useNavigate();
 
   const profilePictureRef = useRef(null);
   const coverPictureRef = useRef(null);
+
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/"); 
+    }
+  }, [user, loading, navigate]);
 
   // get info user
   const fetchUserData = async () => {
@@ -156,6 +164,7 @@ const ProfilePage = () => {
             ))}
           </ul>
         </div>
+        
       </div>
     </Layout>
   );

@@ -6,6 +6,10 @@ import Icons from "../Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { addComment } from "../../services/postService";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
+import { IoIosShareAlt } from "react-icons/io";
+import { RiSendPlaneLine} from 'react-icons/ri';
 import defaultAtv from "../../img/default.jpg";
 const cx = classNames.bind(styles);
 
@@ -68,12 +72,21 @@ const Post = ({ post }) => {
         />
       )}
       <div className={cx("post-actions")}>
-        <Icons.Like
-          className={cx("button-icon", { active: isLiked })}
-          onClick={handleLikeClick}
-        />
-        <Icons.Comment className={cx("button")} />
-        <Icons.Share className={cx("button-icon")} />
+        <div className= {cx('item-actions')}>
+          <AiOutlineLike
+            className={cx("button-icon", { active: isLiked })}
+            onClick={handleLikeClick}
+          />
+          <p>Likes</p>
+        </div>
+        <div className= {cx('item-actions')}>
+          <FaRegComment className={cx("button-icon")} />
+          <p>{comments.length } Comments</p>
+        </div>
+        <div className= {cx('item-actions')}>
+          <IoIosShareAlt className={cx("button-icon")} />
+          <p>Share</p>
+        </div>
       </div>
       <div className={cx("comments")}>
         <h4 className={cx("comments-title")}>Comments:</h4>
@@ -122,7 +135,7 @@ const Post = ({ post }) => {
             className={cx("button-submit")}
             onClick={handleCommentSubmit}
           >
-            <Icons.SubmitComment />
+            <RiSendPlaneLine className={cx('button-icon')}/>
           </button>
         </form>
       </div>

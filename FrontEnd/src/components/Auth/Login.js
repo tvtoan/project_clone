@@ -18,8 +18,9 @@ const Login = () => {
       const response = await login(email, password);
       if (response && response.token) {
         localStorage.setItem("token", response.token);
+        window.location.href = "/home"; 
       }
-      navigate("/home");
+      
     } catch (error) {
       setError(
         error.response

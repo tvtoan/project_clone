@@ -4,9 +4,10 @@
   align-items: center;
   justify-content: space-around;
   min-height: 100vh;
-  padding: 20px;
+  padding:0 20px 0 20px;
   background-color: #f0f2f5;
   font-family: Arial, sans-serif;
+  overflow: hidden;
 
   .left-section {
     flex: 1;

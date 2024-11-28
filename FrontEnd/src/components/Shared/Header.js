@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Header.module.scss";
 import classNames from "classnames/bind";
 import {
-  FaBell,
-  FaFacebookMessenger,
-  FaSearch,
   FaUserFriends,
   FaStore,
+  FaFacebookMessenger,
+  FaBell,
+  FaSearch,
 } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import { PiVideoFill } from "react-icons/pi";
@@ -15,25 +15,27 @@ import { AiFillHome } from "react-icons/ai";
 
 import { getUserByUsername } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import defaultAvt from "../../img/default.jpg";
 
 const cx = classNames.bind(styles);
+
 const Header = () => {
   const { user } = useAuth();
-  const [active, setActive] = useState("home");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const navigate = useNavigate();
-  const handleAvatarClick = () => {
-    navigate(`/profile/${user._id}`);
-  };
-  console.log(active);
+  const location = useLocation();
+  const [active, setActive] = useState("home");
 
-  const handleIconClick = (iconName) => {
-    setActive(iconName);
-  };
+  useEffect(() => {
+    // Cập nhật trạng thái active khi URL thay đổi
+    const currentPath = location.pathname;
+    const activeMenu = menuItems.find((item) => item.path === currentPath)?.name || "home";
+    setActive(activeMenu);
+  }, [location]);
+
   const handleSearch = async (e) => {
     const query = e.target.value.trim().toLowerCase();
     setSearchTerm(query);
@@ -50,6 +52,14 @@ const Header = () => {
       setSearchResults([]);
     }
   };
+
+  const menuItems = [
+    { name: "home", icon: <AiFillHome />, path: "/home" },
+    { name: "friend", icon: <FaUserFriends />, path: "/home" },
+    { name: "video", icon: <PiVideoFill />, path: "/video" },
+    { name: "store", icon: <FaStore />, path: "/home" },
+    { name: "group", icon: <MdOutlineGroup />, path: "/inbox/:id" },
+  ];
 
   return (
     <div className={cx("header")}>
@@ -75,7 +85,6 @@ const Header = () => {
                     }
                     className={cx("img")}
                   />
-
                   {user.username}
                 </div>
               ))}
@@ -84,42 +93,15 @@ const Header = () => {
         </div>
       </div>
       <div className={cx("header-center")}>
-        <div
-          className={cx("header-options", { active: active === "home" })}
-          onClick={() => handleIconClick("home")}
-        >
-          <AiFillHome
-            className={cx("header-icon")}
-            onClick={() => navigate("/home")}
-          />
-        </div>
-        <div
-          className={cx("header-options", { active: active === "friend" })}
-          onClick={() => handleIconClick("friend")}
-        >
-          <FaUserFriends
-            className={cx("header-icon")}
-            onClick={() => navigate("/home")}
-          />
-        </div>
-        <div
-          className={cx("header-options", { active: active === "video" })}
-          onClick={() => handleIconClick("video")}
-        >
-          <PiVideoFill
-            className={cx("header-icon")}
-            onClick={() => navigate("/video")}
-          />
-        </div>
-        <div className={cx("header-options")}>
-          <FaStore className={cx("header-icon")} />
-        </div>
-        <div className={cx("header-options")}>
-          <MdOutlineGroup
-            className={cx("header-icon", { active: active === "inbox" })}
-            onClick={() => handleIconClick("inbox")}
-          />
-        </div>
+        {menuItems.map((item) => (
+          <div
+            key={item.name}
+            className={cx("header-options", { active: active === item.name })}
+            onClick={() => navigate(item.path)}
+          >
+            {item.icon}
+          </div>
+        ))}
       </div>
       <div className={cx("header-right")}>
         <FaFacebookMessenger
@@ -134,7 +116,7 @@ const Header = () => {
               : defaultAvt
           }
           className={cx("img")}
-          onClick={handleAvatarClick}
+          onClick={() => navigate(`/profile/${user?._id}`)}
         />
       </div>
     </div>

@@ -7,7 +7,7 @@ import InboxList from "../components/Inbox/InboxList";
 import UserList from "../components/Shared/UserList";
 import Layout from "../../src/components/Layout/Layout";
 import { getUserById } from "../services/authService";
-import defaultAvt from '../img/default.jpg';
+import defaultAvt from "../img/default.jpg";
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +16,14 @@ const InboxPage = () => {
   const { user, loading } = useAuth();
   const [receiver, setReceiver] = useState(null);
   const navigate = useNavigate();
- 
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/"); // Chuyển hướng nếu không đăng nhập
+    }
+  }, [user, loading, navigate]);
+
+
 
   const fetchReceiverData = async () => {
     try {
@@ -54,8 +61,14 @@ const InboxPage = () => {
           {receiverId && receiver ? (
             <>
               <div className={cx("receiver-info")} onClick={handleAvatarClick}>
-                <img src={receiver.profilePicture?`http://localhost:3001${receiver.profilePicture}`:defaultAvt} 
-                onClick={handleAvatarClick} />
+                <img
+                  src={
+                    receiver.profilePicture
+                      ? `http://localhost:3001${receiver.profilePicture}`
+                      : defaultAvt
+                  }
+                  onClick={handleAvatarClick}
+                />
                 <p>{receiver.username}</p>
               </div>
               <div className={cx("chat-area")}>
@@ -63,7 +76,11 @@ const InboxPage = () => {
               </div>
             </>
           ) : (
-            <p>Select a user to start chatting</p>
+            <p
+              style={{ color: "white", fontWeight: "bold", fontSize: "1.5rem" }}
+            >
+              Select a user to start chatting
+            </p>
           )}
         </div>
       </div>

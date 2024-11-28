@@ -27,10 +27,12 @@ const Message = ({ message, isCurrentUser }) => {
       onClick={() => setShowTime(!showTime)}
     >
       <div className={cx("message-box")}>
-        <p className={cx("message-username")}>
-          {message.senderId?.username || "Unknown User"}
-        </p>
+        
         <p className={cx("message-text")}>{message.text}</p>
+        <img 
+          src = {`http://localhost:3001${message.senderId?.profilePicture}`}
+          className={cx('img')}
+        />
         {showTime && (
           <div className={cx("message-time")}>
             <p>Sent: {timeAgo}</p>

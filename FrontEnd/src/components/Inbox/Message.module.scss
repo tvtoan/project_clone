@@ -1,22 +1,24 @@
 .message {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: flex-start;
 
   &.sent {
-    justify-content: flex-end; 
+    justify-content: flex-end;
   }
 
   &.received {
-    justify-content: flex-start; 
+    justify-content: flex-start;
   }
 }
 
 .message-box {
-  max-width: 60%; 
+  max-width: 40%;
   padding: 12px;
   border-radius: 20px;
   font-size: 14px;
-  word-wrap: break-word; // Đảm bảo nội dung không bị tràn ra ngoài
+  word-wrap: break-word;
+  display: flex;
+  gap: 10px;
 }
 
 .message-username {
@@ -30,24 +32,50 @@
   font-size: 14px;
 }
 
-.sent .message-box {
-  background-color: #145718; 
-  color: white;
-  border-top-right-radius: 0; 
+.img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
+.sent .message-text {
+  background-color: #145718;
+  color: white;
+
+  padding: 10px;
+  border-radius: 10px 0 10px 10px;
+  
+}
+
+.sent .message-box {
+  padding: -10px;
+}
+
+.received .message-text {
+  background-color: #303030;
+  padding: 10px;
+  border-radius: 0px 10px 10px 10px;
+}
 .received .message-box {
-  background-color: #303030; 
-  border-top-left-radius: 0; 
+  display: flex;
+  position: relative;
+  margin-left: 25px;
+  gap: 10px;
+  .img {
+    position: absolute;
+    left: -25px;
+    
+  }
 }
 
 .message-time {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 0.8em;
-    color: #777;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
+  position: absolute;
+  bottom: 80px;
+  right: 80px;
+  font-size: 0.8em;
+  color: #777;
+  background: rgba(19, 17, 17, 0.8);
+  padding: 2px 5px;
+  border-radius: 3px;
+}

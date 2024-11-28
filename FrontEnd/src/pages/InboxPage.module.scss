@@ -10,13 +10,13 @@
 .user-list {
   flex: 1;
   margin-right: 20px;
-  background-color: #242526;
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 10px;
   padding: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  
+
   height: calc(100vh - 120px);
+  border-right: 0.5px solid #3f4041;
 }
 
 .message-section {
@@ -25,10 +25,10 @@
   flex-direction: column;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding-right: 0;
   overflow: hidden;
   height: calc(100vh - 100px);
+  border: none;
 }
 
 .receiver-info {
@@ -58,5 +58,3 @@
   flex: 1;
   overflow-y: hidden;
 }
-
-

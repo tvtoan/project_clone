@@ -38,14 +38,13 @@
     margin-top: 5px;
   }
   
-  /* Phần ảnh */
   .form-preview {
     width: 100%;
     height: 70%; 
-    object-fit: cover; /* Đảm bảo ảnh không bị tràn */
+    object-fit: cover; 
     border-radius: 10px;
     margin-bottom: 10px;
-    overflow: hidden; /* Ẩn phần ảnh bị tràn */
+    overflow: hidden; 
   }
   
   /* Phần upload icon và form text */
