@@ -68,6 +68,10 @@ body {
   .left-column {
     display: none;
   }
+  .middle-column {
+    max-width: calc(100% + 200px);
+
+  }
 }
 
 @media (max-width: 1450px) {

@@ -7,6 +7,7 @@ import InboxList from "../components/Inbox/InboxList";
 import UserList from "../components/Shared/UserList";
 import Layout from "../../src/components/Layout/Layout";
 import { getUserById } from "../services/authService";
+
 import defaultAvt from "../img/default.jpg";
 
 const cx = classNames.bind(styles);
@@ -19,11 +20,9 @@ const InboxPage = () => {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate("/"); // Chuyển hướng nếu không đăng nhập
+      navigate("/");
     }
   }, [user, loading, navigate]);
-
-
 
   const fetchReceiverData = async () => {
     try {

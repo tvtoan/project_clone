@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styles from "./CreateVideo.module.scss";
 import classNames from "classnames/bind";
 import { createVideo } from "../../services/videoService";
-import Icons from "../Shared/Icon";
+import {PiUploadSimple} from 'react-icons/pi';
 import { useAuth } from "../../context/AuthContext";
 import defaultAvt from '../../img/default.jpg';
 
@@ -100,7 +100,7 @@ const CreateVideo = ({ onVideoCreated, userId }) => {
           onClick={handleFileClick}
           className={cx("custom-file-upload")}
         >
-          <Icons.Upload />
+          <PiUploadSimple />
         </button>
         <button
           type="submit"

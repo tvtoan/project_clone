@@ -12,7 +12,7 @@ import Layout from "../components/Layout/Layout";
 import Post from "../components/Post/Post";
 import CreatePost from "../components/Post/CreatePost";
 import { useNavigate, useParams, userNavigate } from "react-router-dom";
-import Icons from "../components/Shared/Icon";
+import { IoIosCamera } from 'react-icons/io';
 import defaultAvt from '../img/default.jpg';
 
 const cx = classNames.bind(styles);
@@ -125,7 +125,7 @@ const ProfilePage = () => {
             className={cx("upload-input")}
           />
           <button onClick={handleCoverClick} className={cx("custom-cover")}>
-            <Icons.Camera />
+            <IoIosCamera/>
           </button>
         </div>
 
@@ -148,7 +148,7 @@ const ProfilePage = () => {
             className={cx("upload-input")}
           />
           <button onClick={handleProfileClick} className={cx("custom-profile")}>
-            <Icons.Camera />
+            <IoIosCamera/>
           </button>
           <p className={cx("username")}>{userData?.username}</p>
         </div>

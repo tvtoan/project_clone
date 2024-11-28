@@ -1,4 +1,4 @@
-import React , {useEffect }from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../components/Shared/Sidebar";
 import PostList from "../components/Post/PostList";
 import StoryList from "../components/Story/StoryList";
@@ -14,11 +14,9 @@ const HomePage = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  
-    if ( !user) {
-      return navigate("/"); // Chuyển hướng nếu không đăng nhập
-    }
-  
+  if (!user) {
+    return navigate("/"); // Chuyển hướng nếu không đăng nhập
+  }
 
   if (loading) {
     return <div>Loading...</div>; // Hiển thị khi đang kiểm tra auth
@@ -49,4 +47,4 @@ const HomePage = () => {
   //
 };
 
-export default  HomePage;
+export default HomePage;

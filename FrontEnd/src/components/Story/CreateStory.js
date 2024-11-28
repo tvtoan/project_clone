@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { createStory } from "../../services/storyService";
 import styles from "./CreateStory.module.scss";
 import classNames from "classnames/bind";
-import Icons from "../Shared/Icon";
+import {PiUploadSimple} from 'react-icons/pi';
 
 const cx = classNames.bind(styles);
 
@@ -71,7 +71,7 @@ const CreateStory = ({ onStoryCreated, userId }) => {
         onClick={handleFileClick}
         className={cx("custom-file-upload")}
       >
-        <Icons.Upload />
+        <PiUploadSimple />
       </button>
       {preview && (
         <img src={preview} alt="Preview" className={cx("form-preview")} />

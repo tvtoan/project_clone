@@ -3,10 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { deleteStory, getStoryById } from "../services/storyService";
 import styles from "./Story.module.scss";
 import classNames from "classnames/bind";
-import Icons from "../components/Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import defaultAvt from "../img/default.jpg";
 import { useAuth } from "../context/AuthContext";
+import {RiCloseCircleFill} from 'react-icons/ri';
+import {MdDelete} from 'react-icons/md';
+
 const cx = classNames.bind(styles);
 
 const formatStoryDate = (dateString) => {
@@ -75,14 +77,14 @@ const StoryPage = () => {
           </div>
           <p className={cx("time-ago")}>{timeAgo}</p>
           <button onClick={handleDelete} className={cx("delete-button")}>
-            <Icons.Delete />
+            <MdDelete/>
           </button>
           <button
             className={cx("close-button")}
             onClick={() => navigate("/home")}
             aria-label="Close story"
           >
-            <Icons.Close />
+            <RiCloseCircleFill/>
           </button>
 
           {story.image && (

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./Video.module.scss";
 import classNames from "classnames/bind";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
-import Icons from "../Shared/Icon";
 import { addComment } from "../../services/videoService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -133,7 +132,7 @@ const Video = ({ video }) => {
             className={cx("button-submit")}
             onClick={handleCommentSubmit}
           >
-            <Icons.SubmitComment />
+            <RiSendPlaneLine />
           </button>
         </form>
       </div>

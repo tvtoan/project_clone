@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import styles from "./Post.module.scss";
 import classNames from "classnames/bind";
-import Icons from "../Shared/Icon";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { addComment } from "../../services/postService";
 import { useNavigate } from "react-router-dom";
@@ -81,7 +80,7 @@ const Post = ({ post }) => {
         </div>
         <div className= {cx('item-actions')}>
           <FaRegComment className={cx("button-icon")} />
-          <p>{comments.length } Comments</p>
+          <p>{comments.length} Comments</p>
         </div>
         <div className= {cx('item-actions')}>
           <IoIosShareAlt className={cx("button-icon")} />
