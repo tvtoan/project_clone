@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPost, getPost,getPosts, deletePost, addComment, getPostsByUserId } from '../controllers/postController';
+import { createPost, getPost,getPosts, deletePost, getPostsByUserId } from '../controllers/postController';
 import authMiddleware from '../middlewares/authMiddleware';
 import multer from 'multer';
 import path from 'path';
@@ -17,12 +17,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.post('/', authMiddleware, upload.single('image'),(req, res, next) => {
-    console.log(req.file);
-    createPost(req, res, next);
-});
+router.post('/', authMiddleware, upload.single('image'),createPost);
 
-router.post("/:id/comments", authMiddleware, addComment);
 router.get('/', authMiddleware, getPosts);
 router.get('/:id', authMiddleware, getPost);
 router.get('/user/:userId', authMiddleware, getPostsByUserId);
