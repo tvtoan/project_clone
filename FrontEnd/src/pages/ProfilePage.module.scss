@@ -39,9 +39,8 @@
   background-color: rgba(0, 0, 0, 0);
   border: none;
   font-size: 30px;
-    color:#d1c8c8;
-    cursor: pointer;
-  
+  color: #d1c8c8;
+  cursor: pointer;
 }
 
 .user-info {
@@ -66,9 +65,8 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   position: absolute;
-  left:-80px;
-  bottom:-100px;
-  
+  left: -80px;
+  bottom: -100px;
 }
 
 .username {
@@ -82,14 +80,14 @@
 }
 
 .custom-profile {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    left: 80px;
-    bottom: -90px;
-    font-size: 30px;
-    color:#d1c8c8;
-    cursor: pointer;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  left: 80px;
+  bottom: -90px;
+  font-size: 30px;
+  color: #d1c8c8;
+  cursor: pointer;
 }
 
 .user-posts {

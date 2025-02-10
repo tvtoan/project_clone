@@ -1,68 +1,114 @@
-// Post.js
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { deletePost } from "../../services/postService";
+import { addComment } from "../../services/commentService";
+import { useAuth } from "../../context/AuthContext";
+import CommentList from "../Comment/CommentList";
 import styles from "./Post.module.scss";
 import classNames from "classnames/bind";
-import { formatDistanceToNow, parseISO } from "date-fns";
-import { addComment } from "../../services/postService";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { IoIosShareAlt } from "react-icons/io";
-import { RiSendPlaneLine} from 'react-icons/ri';
-import defaultAtv from "../../img/default.jpg";
+import { RiSendPlaneLine } from "react-icons/ri";
+import { FaDeleteLeft } from "react-icons/fa6";
+import defaultAvt from "../../img/default.jpg";
+
 const cx = classNames.bind(styles);
 
-const formatPostDate = (dateString) => {
-  const parsedDate = parseISO(dateString); // parse string ISO to Date
-  return formatDistanceToNow(parsedDate, { addSuffix: true }); // calc distance time and add 'ago'
-};
-
-const Post = ({ post }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const Post = ({ post: initialPost, onPostUpdated }) => {
+  const { user } = useAuth();
+  const [post, setPost] = useState(initialPost);
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(post.comments || []);
-  const timeAgo = formatPostDate(post.createdAt);
-  const navigate = useNavigate();
+  const [isCommenting, setIsCommenting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
-  const handleAvatarClick = () => {
-    navigate(`/profile/${post.userId?._id}`);
-  };
-  const handleLikeClick = (e) => {
-    setIsLiked(!isLiked); //
+  console.log(post._id);
+  const handleLikeClick = () => {
+    setIsLiked(!isLiked);
   };
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!commentText.trim()) return;
-
+  const handleDeletePost = useCallback(async () => {
     try {
-      const newPost = await addComment(post._id, { comment: commentText });
-      setComments(newPost.comments); // render comments list
-      setCommentText(""); // clear text after comment success
+      await deletePost(post._id);
+      onPostUpdated((prevPosts) => prevPosts.filter((p) => p._id !== post._id));
     } catch (error) {
-      console.error("Failed to add comment", error);
+      console.error("Failed to delete post", error);
     }
-  };
+  }, [post?._id, onPostUpdated]);
+
+  const handleAddComment = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!commentText.trim()) return;
+
+      try {
+        setIsCommenting(true);
+        const newComment = await addComment(post._id, { comment: commentText });
+        const commentWithUser = {
+          ...newComment,
+          userId: {
+            _id: user._id,
+            username: user.username,
+            profilePicture: user.profilePicture,
+          },
+        };
+        setPost((prevPost) => ({
+          ...prevPost,
+          comments: [commentWithUser, ...(prevPost.comments || [])],
+        }));
+        onPostUpdated((prevPost) => ({
+          ...prevPost,
+          comments: [commentWithUser, ...(prevPost.comments || [])],
+        }));
+        setCommentText("");
+      } catch (error) {
+        console.error("Failed to add comment", error);
+      } finally {
+        setIsCommenting(false);
+      }
+    },
+    [commentText, post._id, onPostUpdated, user]
+  );
+
+  const handleCommentUpdated = useCallback(
+    (updatedComments) => {
+      setPost((prevPost) => ({
+        ...prevPost,
+        comments: updatedComments,
+      }));
+      onPostUpdated((prevPost) => ({
+        ...prevPost,
+        comments: updatedComments,
+      }));
+    },
+    [onPostUpdated]
+  );
 
   return (
     <div className={cx("post")}>
       <div className={cx("user-info")}>
         <img
           src={
-            post.userId
-              ? `http://localhost:3001${post.userId?.profilePicture}`
-              : defaultAtv
+            `http://localhost:3001${post.userId?.profilePicture}` || defaultAvt
           }
+          alt={`${post.userId?.username}'s avatar`}
           className={cx("img")}
-          onClick={post.userId ? handleAvatarClick : undefined}
         />
-        <h3 className={cx("username")}>
-          {post.userId?.username || "Unknown User"}
-        </h3>
+        <div>
+          <h3 className={cx("username")}>
+            {post.userId?.username || "Unknown User"}
+          </h3>
+          <p className={cx("post-time")}>
+            {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+          </p>
+        </div>
+        {user && user._id === post.userId?._id && (
+          <button onClick={handleDeletePost} className={cx("delete-button")}>
+            <FaDeleteLeft className={cx("delete-button")} />
+          </button>
+        )}
       </div>
-      <p className={cx("post-time")}>{timeAgo}</p>
       <p className={cx("description")}>{post.description}</p>
-
       {post.image && (
         <img
           src={`http://localhost:3001${post.image}`}
@@ -71,73 +117,44 @@ const Post = ({ post }) => {
         />
       )}
       <div className={cx("post-actions")}>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <AiOutlineLike
             className={cx("button-icon", { active: isLiked })}
             onClick={handleLikeClick}
           />
           <p>Likes</p>
         </div>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <FaRegComment className={cx("button-icon")} />
-          <p>{comments.length} Comments</p>
+          <p>Comments ({post.comments?.length || 0})</p>
         </div>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <IoIosShareAlt className={cx("button-icon")} />
           <p>Share</p>
         </div>
       </div>
-      <div className={cx("comments")}>
-        <h4 className={cx("comments-title")}>Comments:</h4>
-        <ul className={cx("comments-list")}>
-          {Array.isArray(comments) && comments.length > 0 ? (
-            comments.map((comment) => {
-              const commentTime = formatPostDate(comment.createAt); //  calc comment time ago
-              return (
-                <li key={comment._id} className={cx("comment-item")}>
-                  <div className={cx("comment-user")}>
-                    <img
-                      src={
-                        comment.userId
-                          ? `http://localhost:3001${comment.userId?.profilePicture}`
-                          : defaultAtv
-                      }
-                      className={cx("img")}
-                    />
-                    <div className={cx("comment-details")}>
-                      <strong className={cx("comment-username")}>
-                        {comment.userId?.username || "Unknown User"}
-                      </strong>
-                      <p className={cx("time-comment")}>{commentTime}</p>
-                      <p className={cx("comment-text")}>{comment.comment}</p>
-                    </div>
-                  </div>
-                </li>
-              );
-            })
-          ) : (
-            <p className={cx("no-comments")}>No comments available</p>
-          )}
-        </ul>
-
-        {/* Form add comment */}
-        <form onSubmit={handleCommentSubmit} className={cx("form-comment")}>
-          <input
-            type="text"
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            placeholder="Add a comment..."
-            className={cx("comment-input")}
-          />
-          <button
-            type="submit"
-            className={cx("button-submit")}
-            onClick={handleCommentSubmit}
-          >
-            <RiSendPlaneLine className={cx('button-icon')}/>
-          </button>
-        </form>
-      </div>
+      <CommentList
+        comments={post.comments}
+        postId={post._id}
+        onCommentUpdated={handleCommentUpdated}
+      />
+      <form onSubmit={handleAddComment} className={cx("comment-form")}>
+        <input
+          type="text"
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="Write a comment..."
+          className={cx("comment-input")}
+          disabled={isCommenting}
+        />
+        <button
+          type="submit"
+          className={cx("comment-submit")}
+          disabled={isCommenting}
+        >
+          <RiSendPlaneLine className={cx("send-button")} />
+        </button>
+      </form>
     </div>
   );
 };

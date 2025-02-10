@@ -4,11 +4,10 @@ import classNames from "classnames/bind";
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
 import { addComment } from "../../services/videoService";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { IoIosShareAlt } from "react-icons/io";
-import { RiSendPlaneLine} from 'react-icons/ri';
+import { RiSendPlaneLine } from "react-icons/ri";
 import defaultAvt from "../../img/default.jpg";
 
 const cx = classNames.bind(styles);
@@ -18,14 +17,13 @@ const formatVideoDate = (dateString) => {
   return formatDistanceToNowStrict(parsedDate, { addSuffix: true });
 };
 const Video = ({ video }) => {
-  const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(video.comments || []);
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLikeClick = (e) => {
     setIsLiked(!isLiked);
-  }
+  };
 
   const timeAgo = formatVideoDate(video.createdAt);
 
@@ -70,18 +68,18 @@ const Video = ({ video }) => {
         />
       </video>
       <div className={cx("video-actions")}>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <AiOutlineLike
             className={cx("button-icon", { active: isLiked })}
             onClick={handleLikeClick}
           />
           <p>Likes</p>
         </div>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <FaRegComment className={cx("button-icon")} />
           <p>{comments.length} Comments</p>
         </div>
-        <div className= {cx('item-actions')}>
+        <div className={cx("item-actions")}>
           <IoIosShareAlt className={cx("button-icon")} />
           <p>Share</p>
         </div>

@@ -118,23 +118,28 @@ export const updateProfilePicture = async (imageFile) => {
 
 export const updateCoverPicture = async (imageFile) => {
   const formData = new FormData();
-  formData.append("image",imageFile);
-  const token = localStorage.getItem('token');
+  formData.append("image", imageFile);
+  const token = localStorage.getItem("token");
   try {
-    const response = await axios.put(`${API_URL}/cover-picture`, formData,{
+    const response = await axios.put(`${API_URL}/cover-picture`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
-      }
-    })
+      },
+    });
     return response.data;
-
   } catch (error) {
     console.error("Error updating cover picture", error);
     throw error;
   }
 };
 
-export const logout = () => {
-  localStorage.removeItem("token");
+export const logout = async () => {
+  try {
+    await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+    localStorage.removeItem("token");
+  } catch (error) {
+    console.error("Logout failed", error.response?.data || error.message);
+    throw error;
+  }
 };
